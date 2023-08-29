@@ -46,5 +46,5 @@
     "suppressImplicitAnyIndexErrors": false,
     "noStrictGenericChecks": false
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.d.ts", "**/*.tsx", "**/*.vue", "vocabularyList.js"]
+  "include": ["**/*.js", "**/*.ts", "**/*.d.ts", "**/*.tsx", "**/*.vue"]
 }
