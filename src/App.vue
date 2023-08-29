@@ -1,12 +1,11 @@
 <template>
-  <button class="btn btn-primary d-flex justify-content-center align-items-center">
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident rs voluptates, quae est deserunt error nulla dolore ut eius labore amet,
-    eligendi assumenda placeat. Dolorum, ex!
-  </button>
+  <Login></Login>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+
+import Login from './components/Login.vue';
 </script>
 
 <style scoped></style>
