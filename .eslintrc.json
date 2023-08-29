@@ -1,0 +1,31 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended-type-checked", // for js project use "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/strict-type-checked" // same here without type-checked
+  ],
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "no-constant-binary-expression": "error",
+    "no-duplicate-imports": "error",
+    "no-template-curly-in-string": "error",
+    "no-unreachable-loop": "error",
+    "camelcase": ["error", { "ignoreDestructuring": true, "ignoreImports": true }],
+    "curly": "error",
+    "no-shadow": "error",
+    "no-unused-expressions": "error",
+    "no-var": "error",
+    "prefer-const": "warn"
+  },
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  }
+}
