@@ -11,5 +11,5 @@ export type UserType = {
 
 export const logedInUserID = ref<number | undefined>();
 export const users = ref<UserType[]>([]);
-
+export const route = ref('Home');
 localStorage.setItem('LocalUserList', JSON.stringify(users.value));
