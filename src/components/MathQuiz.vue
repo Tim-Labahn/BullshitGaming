@@ -1,32 +1,34 @@
 <template>
-  <h1 class="d-flex justify-content-center align-items-center header">Math Quiz</h1>
-  <h3 class="d-flex justify-content-center align-items-center">Try to go as far as you can!</h3>
-  <h1 class="d-flex justify-content-center align-items-center">
-    {{ questions[questionCount].question }}
-  </h1>
-  <div class="textWrapper">
-    <h3>Question: {{ questionCount + 1 }}</h3>
-    <div>
-      <h3>Questions correct: {{ correctQuestionsCount }}</h3>
-      <h3>Questions wrong: {{ wrongQuestionsCount }}</h3>
+  <div class="mathQuiz">
+    <h1 class="d-flex justify-content-center align-items-center header">Math Quiz</h1>
+    <h3 class="d-flex justify-content-center align-items-center">Try to go as far as you can!</h3>
+    <h1 class="d-flex justify-content-center align-items-center">
+      {{ questions[questionCount].question }}
+    </h1>
+    <div class="textWrapper">
+      <h3>Question: {{ questionCount + 1 }}</h3>
+      <div>
+        <h3>Questions correct: {{ correctQuestionsCount }}</h3>
+        <h3>Questions wrong: {{ wrongQuestionsCount }}</h3>
+      </div>
     </div>
-  </div>
-  <div class="questionWrapper">
-    <div
-      v-for="answer in questions[questionCount].answers"
-      @click="
-        answerClick(answer);
-        clicked = answer;
-      "
-      class="d-flex justify-content-center align-items-center answerWrapper"
-      :class="
-        // clicked === questions[questionCount].correctAnswer && answer === clicked
-        //   ? 'bg-success'
-        //   : ''
-        changeAnswerBackground(answer)
-      "
-    >
-      {{ answer }}
+    <div class="questionWrapper">
+      <div
+        v-for="answer in questions[questionCount].answers"
+        @click="
+          answerClick(answer);
+          clicked = answer;
+        "
+        class="d-flex justify-content-center align-items-center answerWrapper"
+        :class="
+          // clicked === questions[questionCount].correctAnswer && answer === clicked
+          //   ? 'bg-success'
+          //   : ''
+          changeAnswerBackground(answer)
+        "
+      >
+        {{ answer }}
+      </div>
     </div>
   </div>
 </template>
@@ -180,11 +182,12 @@ function generateQuestion() {
   }
 }
 /* Main styles */
-body {
+.mathQuiz {
   background-size: 100% 100%;
   background-position: 0px 0px;
   background-image: linear-gradient(90deg, #212d19ff 0%, #40862eff 50%, #212d19ff 100%);
-  height: 100vh;
+  height: 94vh;
+  width: 99vw;
   color: black;
   font: 400 16px/1.5 exo, ubuntu, 'segoe ui', helvetica, arial, sans-serif;
   text-align: center;
@@ -212,7 +215,6 @@ body::before {
 .questionWrapper {
   display: grid;
   margin-inline: auto;
-  margin-bottom: 25%;
   grid-template-columns: repeat(2, 1fr);
   width: 70vw;
   height: 40vh;
@@ -232,7 +234,7 @@ h3 {
 }
 
 .header {
-  padding-top: 15%;
+  padding-top: 10%;
 }
 
 .textWrapper {

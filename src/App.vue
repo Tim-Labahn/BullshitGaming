@@ -68,6 +68,7 @@ import Login from './components/Login.vue';
 import Tetris from './components/Tetris.vue';
 import CookieClicker from './components/cookieClicker.vue';
 import TicTacToe from './components/TicTacToe.vue';
+import MathQuiz from './components/MathQuiz.vue';
 
 const route = ref('home');
 </script>

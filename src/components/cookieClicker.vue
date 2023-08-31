@@ -116,10 +116,13 @@ function frenzy() {
   justify-content: center;
   align-items: center;
   height: 94vh;
+  width: 100vw;
   background: rgb(9, 27, 39);
   background: linear-gradient(107deg, rgba(9, 27, 39, 1) 0%, rgba(23, 63, 88, 1) 50%);
+  background-size: cover;
   user-select: none;
   color: white;
+  flex-direction: column;
 }
 
 h1,
