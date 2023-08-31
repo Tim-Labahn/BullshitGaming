@@ -159,33 +159,31 @@ function checkVertical() {
 }
 
 function checkDiagonal() {
-  for (let i = 2; i >= 0; i--) {
-    for (let y = gameSize - 1; y > 0; y--) {
-      for (let x = gameSize - 1; x > 0; x--) {
-        if (
-          gameMap.value[y][x].player === player &&
-          !gameMap.value[y][x].isEmpty &&
-          gameMap.value[y - 1]?.[x - 1]?.player === player &&
-          !gameMap.value[y - 1]?.[x - 1]?.isEmpty &&
-          gameMap.value[y - 2]?.[x - 2]?.player === player &&
-          !gameMap.value[y - 2]?.[x - 2]?.isEmpty &&
-          gameMap.value[y - 3]?.[x - 3]?.player === player &&
-          !gameMap.value[y - 3]?.[x - 3]?.isEmpty
-        ) {
-          showWinner();
-        }
-        if (
-          gameMap.value[y][x].player === player &&
-          !gameMap.value[y][x].isEmpty &&
-          gameMap.value[y - 1]?.[x + 1]?.player === player &&
-          !gameMap.value[y - 1]?.[x + 1]?.isEmpty &&
-          gameMap.value[y - 2]?.[x + 2]?.player === player &&
-          !gameMap.value[y - 2]?.[x + 2]?.isEmpty &&
-          gameMap.value[y - 3]?.[x + 3]?.player === player &&
-          !gameMap.value[y - 3]?.[x + 3]?.isEmpty
-        ) {
-          showWinner();
-        }
+  for (let y = gameSize - 1; y > 0; y--) {
+    for (let x = gameSize - 1; x > 0; x--) {
+      if (
+        gameMap.value[y][x].player === player &&
+        !gameMap.value[y][x].isEmpty &&
+        gameMap.value[y - 1]?.[x - 1]?.player === player &&
+        !gameMap.value[y - 1]?.[x - 1]?.isEmpty &&
+        gameMap.value[y - 2]?.[x - 2]?.player === player &&
+        !gameMap.value[y - 2]?.[x - 2]?.isEmpty &&
+        gameMap.value[y - 3]?.[x - 3]?.player === player &&
+        !gameMap.value[y - 3]?.[x - 3]?.isEmpty
+      ) {
+        showWinner();
+      }
+      if (
+        gameMap.value[y][x].player === player &&
+        !gameMap.value[y][x].isEmpty &&
+        gameMap.value[y - 1]?.[x + 1]?.player === player &&
+        !gameMap.value[y - 1]?.[x + 1]?.isEmpty &&
+        gameMap.value[y - 2]?.[x + 2]?.player === player &&
+        !gameMap.value[y - 2]?.[x + 2]?.isEmpty &&
+        gameMap.value[y - 3]?.[x + 3]?.player === player &&
+        !gameMap.value[y - 3]?.[x + 3]?.isEmpty
+      ) {
+        showWinner();
       }
     }
   }
