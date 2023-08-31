@@ -1,30 +1,32 @@
 <template>
-  <dialog class="GameStart" :open="openStart">
-    <p>
-      Click
-      <button :class="'StartGame'" @click="(openStart = false), game()">Here</button>
-      to start the game
-    </p>
-  </dialog>
-  <dialog class="GameEnd" :open="openRestart">
-    <p>
-      Click
-      <button :class="'RestartGame'" @click="(openRestart = false), game()">Here</button>
-      to restart the game
-    </p>
-  </dialog>
-  <div class="field">
-    <div class="row" v-for="row in gameMap">
-      <div
-        class="tile"
-        v-for="tile in row"
-        @click="
-          if (tile.isEmpty) {
-            (tile.isEmpty = false), (tile.isCross = player), checkWinLose(), playerSwitch();
-          }
-        "
-      >
-        <div>{{ tile.isCross }}</div>
+  <div class="tictactoe">
+    <dialog class="GameStart" :open="openStart">
+      <p>
+        Click
+        <button :class="'StartGame'" @click="(openStart = false), game()">Here</button>
+        to start the game
+      </p>
+    </dialog>
+    <dialog class="GameEnd" :open="openRestart">
+      <p>
+        Click
+        <button :class="'RestartGame'" @click="(openRestart = false), game()">Here</button>
+        to restart the game
+      </p>
+    </dialog>
+    <div class="field">
+      <div class="row" v-for="row in gameMap">
+        <div
+          class="tile"
+          v-for="tile in row"
+          @click="
+            if (tile.isEmpty) {
+              (tile.isEmpty = false), (tile.isCross = player), checkWinLose(), playerSwitch();
+            }
+          "
+        >
+          <div>{{ tile.isCross }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -101,6 +103,11 @@ function generateField() {
 </script>
 
 <style scoped>
+.tictactoe {
+  height: 96vh;
+  display: flex;
+  align-items: center;
+}
 .tile {
   border: 0.5px solid black;
   box-sizing: border-box;
@@ -117,7 +124,8 @@ function generateField() {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   width: 300px;
-
+  justify-content: center;
+  align-items: center;
   /* margin-right: 15.4%; */
 }
 

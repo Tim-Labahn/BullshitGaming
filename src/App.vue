@@ -57,6 +57,9 @@
       <div v-if="route === 'TicTacToe'">
         <TicTacToe></TicTacToe>
       </div>
+      <div v-if="route === 'Minesweeper'">
+        <Minesweeper></Minesweeper>
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +72,7 @@ import Tetris from './components/Tetris.vue';
 import CookieClicker from './components/cookieClicker.vue';
 import TicTacToe from './components/TicTacToe.vue';
 import MathQuiz from './components/MathQuiz.vue';
+import Minesweeper from './components/Minesweeper.vue';
 
 const route = ref('home');
 </script>
