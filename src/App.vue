@@ -65,16 +65,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import Login from './components/Login.vue';
-import Tetris from './components/Tetris.vue';
+// import { ref } from 'vue';
+// import Login from './components/Login.vue';
+import Home from './components/Home.vue';
+
+// import Tetris from './components/Tetris.vue';
 import ConnectFour from './components/ConnectFour.vue';
 import CookieClicker from './components/cookieClicker.vue';
 import TicTacToe from './components/TicTacToe.vue';
 import MathQuiz from './components/MathQuiz.vue';
 import Minesweeper from './components/Minesweeper.vue';
 
-const route = ref('home');
+import { route } from './userInformation';
 </script>
 
 <style scoped></style>
