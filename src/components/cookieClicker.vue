@@ -1,37 +1,37 @@
 <template>
-  <h1>Cookie Clicker</h1>
-  <h3 class="d-flex justify-content-center align-items-center">{{ Math.ceil(player.cookies) }} Cookies</h3>
-
-  <div
-    class="cookie"
-    role="button"
-    @click="
-      biggerCookie = 'biggerCookie';
-      cookieClick();
-    "
-    :class="biggerCookie"
-  ></div>
-  <div>
-    <img src="/cookie.png" alt="golden cookie" width="75" class="goldenCookie" v-if="displayGoldenCookie" @click="frenzy" />
-  </div>
-
-  <div class="stats">
-    <span class="d-flex justify-content-center h2">Stats</span>
-    <ShowCookies :cookies="frenzyActive ? player.clickValue * 7 : player.clickValue">Cookies per Click</ShowCookies>
-    <ShowCookies :cookies="player.passiveClicks">Cookies per Second</ShowCookies>
-    <ShowCookies :cookies="player.cookiesInTotal">In total collected Cookies</ShowCookies>
-  </div>
-  <div class="upgrades">
-    <span class="d-flex justify-content-center h2">Upgrades</span>
-    <div class="d-flex justify-content-around text-decoration-underline" style="height: 60px" role="button" @click="clickUpgrade()">
-      <img src="/cursor.png" alt="cursor" />
-      <span class="d-flex justify-content-center align-items-center fs-4">Cursor</span>
-      <span class="d-flex justify-content-center align-items-center fs-4">{{ clickUpgradeCost() }}</span>
+  <div class="cookieClicker">
+    <h1>Cookie Clicker</h1>
+    <h3 class="d-flex justify-content-center align-items-center">{{ Math.ceil(player.cookies) }} Cookies</h3>
+    <div
+      class="cookie"
+      role="button"
+      @click="
+        biggerCookie = 'biggerCookie';
+        cookieClick();
+      "
+      :class="biggerCookie"
+    ></div>
+    <div>
+      <img src="/cookie.png" alt="golden cookie" width="75" class="goldenCookie" v-if="displayGoldenCookie" @click="frenzy" />
     </div>
-    <div class="d-flex justify-content-around text-decoration-underline" style="height: 60px" role="button" @click="grandmaUpgrade()">
-      <img src="/grandma.jpg" alt="grandma" />
-      <span class="d-flex justify-content-center align-items-center fs-4">Grandma</span>
-      <span class="d-flex justify-content-center align-items-center fs-4">{{ grandmaUpgradeCost() }}</span>
+    <div class="stats">
+      <span class="d-flex justify-content-center h2">Stats</span>
+      <ShowCookies :cookies="frenzyActive ? player.clickValue * 7 : player.clickValue">Cookies per Click</ShowCookies>
+      <ShowCookies :cookies="player.passiveClicks">Cookies per Second</ShowCookies>
+      <ShowCookies :cookies="player.cookiesInTotal">In total collected Cookies</ShowCookies>
+    </div>
+    <div class="upgrades">
+      <span class="d-flex justify-content-center h2">Upgrades</span>
+      <div class="d-flex justify-content-around text-decoration-underline" style="height: 60px" role="button" @click="clickUpgrade()">
+        <img src="/cursor.png" alt="cursor" />
+        <span class="d-flex justify-content-center align-items-center fs-4">Cursor</span>
+        <span class="d-flex justify-content-center align-items-center fs-4">{{ clickUpgradeCost() }}</span>
+      </div>
+      <div class="d-flex justify-content-around text-decoration-underline" style="height: 60px" role="button" @click="grandmaUpgrade()">
+        <img src="/grandma.jpg" alt="grandma" />
+        <span class="d-flex justify-content-center align-items-center fs-4">Grandma</span>
+        <span class="d-flex justify-content-center align-items-center fs-4">{{ grandmaUpgradeCost() }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -111,7 +111,7 @@ function frenzy() {
 </script>
 
 <style scoped lang="scss">
-body {
+.cookieClicker {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,7 +151,7 @@ h3 {
 }
 
 .upgrades {
-  height: 100vh;
+  height: 1864px;
   width: 50vh;
   background: repeating-linear-gradient(to right, #99582a, #99582a 30px, #5a2b09 30px, #5a2b09 60px);
   position: absolute;
@@ -160,7 +160,7 @@ h3 {
 }
 
 .stats {
-  height: 100vh;
+  height: 1864px;
   width: 49.5vh;
   position: absolute;
   left: 0;

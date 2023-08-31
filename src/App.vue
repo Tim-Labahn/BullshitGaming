@@ -16,33 +16,59 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#" @click="route = 'Home'">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">TicTacToe</a>
+            <a class="nav-link" href="#" @click="route = 'TicTacToe'">TicTacToe</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Cookie Clicker</a>
+            <a class="nav-link" href="#" @click="route = 'CookieClicker'">Cookie Clicker</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Connect Four</a>
+            <a class="nav-link" href="#" @click="route = 'ConnectFour'">Connect Four</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Math Quiz</a>
+            <a class="nav-link" href="#" @click="route = 'MathQuiz'">Math Quiz</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Minesweeper</a>
+            <a class="nav-link" href="#" @click="route = 'Minesweeper'">Minesweeper</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <div class="Game" style="height: 90%">
+    <div v-if="route === 'Home'">
+      <Home></Home>
+    </div>
+    <div v-if="route === 'Minesweeper'">
+      <Minesweeper></Minesweeper>
+    </div>
+    <div v-if="route === 'MathQuiz'">
+      <MathQuiz></MathQuiz>
+    </div>
+    <div v-if="route === 'ConnectFour'">
+      <ConnectFour></ConnectFour>
+    </div>
+    <div v-if="route === 'CookieClicker'">
+      <CookieClicker></CookieClicker>
+    </div>
+    <div v-if="route === 'TicTacToe'">
+      <TicTacToe></TicTacToe>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-
 import Login from './components/Login.vue';
+
+import Tetris from './components/Tetris.vue';
+import CookieClicker from './components/cookieClicker.vue';
+import TicTacToe from './components/TicTacToe.vue';
+
+const route = ref('home');
 </script>
 
 <style scoped></style>
