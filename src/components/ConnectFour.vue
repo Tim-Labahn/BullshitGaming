@@ -45,7 +45,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const openStart = ref(true);
 const openRestart = ref(false);
 //--------------
 let player = true;
