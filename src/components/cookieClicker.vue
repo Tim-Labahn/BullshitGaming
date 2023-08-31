@@ -151,8 +151,8 @@ h3 {
 }
 
 .upgrades {
-  margin-top: 1vh;
-  height: 90vh;
+  margin-top: 6vh;
+  height: 94vh;
   width: 50vh;
   background: repeating-linear-gradient(to right, #99582a, #99582a 30px, #5a2b09 30px, #5a2b09 60px);
   position: absolute;
@@ -161,8 +161,8 @@ h3 {
 }
 
 .stats {
-  margin-top: 1vh;
-  height: 90vh;
+  margin-top: 6vh;
+  height: 94vh;
   width: 49.5vh;
   position: absolute;
   left: 0;
