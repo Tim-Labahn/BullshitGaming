@@ -37,25 +37,26 @@
       </div>
     </div>
   </nav>
-
-  <div class="Game" style="height: 90%">
-    <div v-if="route === 'Home'">
-      <Home></Home>
-    </div>
-    <div v-if="route === 'Minesweeper'">
-      <Minesweeper></Minesweeper>
-    </div>
-    <div v-if="route === 'MathQuiz'">
-      <MathQuiz></MathQuiz>
-    </div>
-    <div v-if="route === 'ConnectFour'">
-      <ConnectFour></ConnectFour>
-    </div>
-    <div v-if="route === 'CookieClicker'">
-      <CookieClicker></CookieClicker>
-    </div>
-    <div v-if="route === 'TicTacToe'">
-      <TicTacToe></TicTacToe>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="Game" style="height: 90%">
+      <div v-if="route === 'Home'">
+        <Home></Home>
+      </div>
+      <div v-if="route === 'Minesweeper'">
+        <Minesweeper></Minesweeper>
+      </div>
+      <div v-if="route === 'MathQuiz'">
+        <MathQuiz></MathQuiz>
+      </div>
+      <div v-if="route === 'ConnectFour'">
+        <ConnectFour></ConnectFour>
+      </div>
+      <div v-if="route === 'CookieClicker'">
+        <CookieClicker></CookieClicker>
+      </div>
+      <div v-if="route === 'TicTacToe'">
+        <TicTacToe></TicTacToe>
+      </div>
     </div>
   </div>
 </template>
