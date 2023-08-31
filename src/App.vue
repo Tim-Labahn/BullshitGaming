@@ -37,7 +37,9 @@
       </div>
     </div>
   </nav>
-  <Login></Login>
+  <div class="d-flex justify-content-center align-items-center">
+    <Login></Login>
+  </div>
 </template>
 
 <script lang="ts" setup>
