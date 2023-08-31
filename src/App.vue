@@ -33,6 +33,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#" @click="route = 'Minesweeper'">Minesweeper</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="route = 'Tetris'">Tetris</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -60,6 +63,9 @@
       <div v-if="route === 'Minesweeper'">
         <Minesweeper></Minesweeper>
       </div>
+      <div v-if="route === 'Tetris'">
+        <Tetris></Tetris>
+      </div>
     </div>
   </div>
 </template>
@@ -69,7 +75,7 @@
 // import Login from './components/Login.vue';
 import Home from './components/Home.vue';
 
-// import Tetris from './components/Tetris.vue';
+import Tetris from './components/Tetris.vue';
 import ConnectFour from './components/ConnectFour.vue';
 import CookieClicker from './components/cookieClicker.vue';
 import TicTacToe from './components/TicTacToe.vue';

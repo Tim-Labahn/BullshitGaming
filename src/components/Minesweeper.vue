@@ -1,28 +1,33 @@
 <template>
   <h1>Minesweeper</h1>
   <h4>PLACE FLAGS WITH RIGHT CLICK</h4>
-  <div class="field"></div>
-  <dialog class="start">
-    <p>Pick the Map Size!</p>
-    <select name="map-größen" id="map-größen">
-      <option value="small">Small</option>
-      <option value="medium">Medium</option>
-      <option value="large">Large</option>
-    </select>
-    <button class="pickSize" onclick="document.querySelector('.start').close(); game() ">Submit</button>
-  </dialog>
-  <dialog class="restartGame">
-    <p>YOU LOST</p>
-    <button class="restart" onclick="document.querySelector('.restartGame').close(); startGame()">Restart</button>
-  </dialog>
-  <dialog class="winText">
-    <p>YOU WON</p>
-    <button class="newGame" onclick="document.querySelector('dialog').close()">New Game</button>
-  </dialog>
+  <div class="Minesweeper">
+    <dialog :open="startOpen">
+      <form @submit.prevent="(startOpen = false), checkSize(selectedSize), game(), console.log('size was picked')">
+        <p>Pick the Map Size!</p>
+        <select name="map-größen" id="map-größen" v-model="selectedSize">
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+        </select>
+        <button type="submit" class="pickSize">Submit</button>
+      </form>
+    </dialog>
+    <div class="field">
+      <div class="tile" v-for="y in width">
+        <div class="tile" v-for="x in height">
+          <div v-if="gameMap[x][y].isOpen">{{ countBombs(y, x) }}</div>
+          <div v-if="gameMap[x][y].isBomb">💣</div>
+          <div v-if="gameMap[x][y].isFlag">🚩</div>
+          <div v-else="!gameMap[x][y].isOpen"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
-import { onMounted } from 'vue';
-
+import { ref } from 'vue';
+const selectedSize = ref<string>('small');
 type GameMap = {
   isBomb: boolean;
   isFlag: boolean;
@@ -32,9 +37,10 @@ let gameMap: GameMap = [];
 let width: number;
 let height: number;
 let difficulty: number;
+const startOpen = ref<boolean>(true);
+
 //------------------------
 function game() {
-  checkSize();
   gameMap = [];
   generateField();
   generateBomb();
@@ -190,14 +196,13 @@ function checkWin() {
   }
 }
 
-function checkSize() {
-  const gameMapSize = document.querySelector('select');
+function checkSize(gameMapSize: string) {
   if (gameMapSize) {
-    if (gameMapSize.value === 'small') {
+    if (gameMapSize === 'small') {
       width = 11;
       height = 9;
       difficulty = 2;
-    } else if (gameMapSize.value === 'medium') {
+    } else if (gameMapSize === 'medium') {
       width = 23;
       height = 11;
       difficulty = 3;
@@ -234,20 +239,6 @@ function checkArea(x: number, y: number) {
     tileClick(x + 1, y);
   }
 }
-function startGame() {
-  const options = document.querySelector('.start') as HTMLDialogElement;
-  options.showModal();
-}
-onMounted(() => startGame());
-
-declare global {
-  interface Window {
-    game: () => void;
-    startGame: () => void;
-  }
-}
-window.game = game;
-window.startGame = startGame;
 </script>
 <style scoped lang="scss">
 :root {
@@ -257,7 +248,7 @@ window.startGame = startGame;
   --secondary-color: #a98467;
   --primary-color-lightened: #dbe4b0;
 }
-body {
+.Minesweeper {
   display: flex;
   flex-direction: column;
   justify-content: center;
