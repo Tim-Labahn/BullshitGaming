@@ -30,9 +30,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#" @click="route = 'MathQuiz'">Math Quiz</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#" @click="route = 'Minesweeper'">Minesweeper</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
@@ -57,9 +57,9 @@
       <div v-if="route === 'TicTacToe'">
         <TicTacToe></TicTacToe>
       </div>
-      <div v-if="route === 'Minesweeper'">
+      <!-- <div v-if="route === 'Minesweeper'">
         <Minesweeper></Minesweeper>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
