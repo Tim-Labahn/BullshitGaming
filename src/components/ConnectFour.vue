@@ -25,6 +25,7 @@
       <p>
         Click
         <button
+          class="btn btn-primary"
           :class="'RestartGame'"
           @click="
             gameMap = [];
@@ -203,7 +204,7 @@ function checkChips(c: number) {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: 90vh;
+  height: 95vh;
   background-color: #48cae4;
   width: 100vw;
 }
@@ -236,6 +237,9 @@ dialog {
   font-family: 'Inter', sans-serif;
   font-weight: bold;
   font-size: 20px;
+}
+button {
+  background-color: #023e8a;
 }
 
 .StartGame {
