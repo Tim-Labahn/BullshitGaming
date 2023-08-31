@@ -30,20 +30,9 @@
       <button @click.prevent="route = 'CookieClicker'">Spiel starten</button>
     </div>
   </section>
-  <section>
-    <h2>Community-Forum:</h2>
-    <p>Trete unserer Community bei und tausche dich mit anderen Spielern aus. Stelle Fragen, teile Tipps und sei Teil unserer verrückten Welt!</p>
-    <a href="forum.html">Zum Forum</a>
-  </section>
-  <footer>
-    <p>
-      Bullshit Games ist mehr als nur eine Spiele-Website; es ist ein verrückter, herzlicher Ort, an dem du dich ausleben und gleichzeitig entspannen
-      kannst. Bist du bereit, den Unsinn zu erforschen? Starte noch heute und erlebe Spiele, die dich sprachlos machen!
-    </p>
-  </footer>
 </template>
 
 <script setup lang="ts">
 import { route } from '../userInformation';
-import TicTacToe from './TicTacToe.vue';
+// import TicTacToe from './TicTacToe.vue';
 </script>
