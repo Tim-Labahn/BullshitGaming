@@ -15,7 +15,7 @@
             "
           >
             <div v-if="tile.player && !tile.isEmpty">🔴</div>
-            <div v-if="!tile.player && !tile.isEmpty">🔵</div>
+            <div v-if="!tile.player && !tile.isEmpty">🟡</div>
           </div>
         </div>
       </div>
@@ -202,6 +202,8 @@ function checkChips(c: number) {
   flex-direction: column;
   justify-content: center;
   height: 90vh;
+  background-color: #48cae4;
+  width: 100vw;
 }
 
 .tile {
@@ -217,6 +219,7 @@ function checkChips(c: number) {
   font-size: 60px;
   user-select: none;
   transform: rotate(270deg) scaleY(-1) rotate(180deg);
+  background-color: #023e8a;
 }
 
 .field {
@@ -225,6 +228,12 @@ function checkChips(c: number) {
   grid-template-columns: repeat(7, 1fr);
   width: 700px;
   transform: rotate(180deg) scaleY(-1);
+}
+dialog {
+  background-color: #48cae4;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .StartGame {

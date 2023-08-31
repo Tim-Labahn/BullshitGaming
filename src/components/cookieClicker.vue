@@ -115,7 +115,7 @@ function frenzy() {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 94vh;
+  height: 95vh;
   width: 100vw;
   background: rgb(9, 27, 39);
   background: linear-gradient(107deg, rgba(9, 27, 39, 1) 0%, rgba(23, 63, 88, 1) 50%);
@@ -172,4 +172,5 @@ h3 {
   top: 0;
   background: repeating-linear-gradient(to right, #99582a, #99582a 30px, #5a2b09 30px, #5a2b09 60px);
 }
+
 </style>

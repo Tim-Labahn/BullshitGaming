@@ -10,7 +10,7 @@
     <dialog class="GameEnd" :open="openRestart">
       <p>
         Click
-        <button :class="'RestartGame'" @click="(openRestart = false), game()">Here</button>
+        <button class="btn btn-primary" :class="'RestartGame'" @click="(openRestart = false), game()">Here</button>
         to restart the game
       </p>
     </dialog>
@@ -107,8 +107,13 @@ function generateField() {
   height: 96vh;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: #52796f;
+  width: 100vw;
+  color: #cad2c5;
 }
 .tile {
+  font-weight: bold;
   border: 0.5px solid black;
   box-sizing: border-box;
   width: 100px;
@@ -128,7 +133,20 @@ function generateField() {
   align-items: center;
   /* margin-right: 15.4%; */
 }
-
+dialog {
+  background-color: #84a98c;
+}
+p {
+  margin: 0;
+}
+button {
+  background-color: #52796f;
+  border-color: #84a98c;
+}
+button:hover {
+  background-color: #354f52;
+  border-color: #52796f;
+}
 .StartGame {
   height: 45px;
 }
