@@ -108,13 +108,13 @@ function generateField() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #52796f;
+  background-image: url(/gruene-schmutzige-tafel.jpg);
   width: 100vw;
-  color: #cad2c5;
+  color: #ffffff;
 }
 .tile {
   font-weight: bold;
-  border: 0.5px solid black;
+  border: 2px solid black;
   box-sizing: border-box;
   width: 100px;
   height: 100px;

@@ -96,7 +96,6 @@ function grandmaUpgrade() {
 
 function spawnGoldenCookie() {
   const random = Math.random() * 100;
-  console.log(random);
   if (random <= 1) {
     displayGoldenCookie.value = true;
     setTimeout(() => (displayGoldenCookie.value = false), 10000);
@@ -172,5 +171,4 @@ h3 {
   top: 0;
   background: repeating-linear-gradient(to right, #99582a, #99582a 30px, #5a2b09 30px, #5a2b09 60px);
 }
-
 </style>

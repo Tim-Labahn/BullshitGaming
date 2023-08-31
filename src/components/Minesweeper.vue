@@ -21,6 +21,8 @@
   </dialog>
 </template>
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
 type GameMap = {
   isBomb: boolean;
   isFlag: boolean;
@@ -236,8 +238,7 @@ function startGame() {
   const options = document.querySelector('.start') as HTMLDialogElement;
   options.showModal();
 }
-
-startGame();
+onMounted(() => startGame());
 
 declare global {
   interface Window {
