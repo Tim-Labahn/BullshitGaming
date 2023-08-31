@@ -115,9 +115,9 @@ const newuserName = ref('');
 const newuserLastName = ref('');
 const newuserBirthDay = ref<number>(0);
 const newuserGender = ref('');
-const newuserPasswort = ref<string>('');
+const newuserPasswort = ref('');
 const newuserNummer = ref<number>(0);
-const newuserEMail = ref<string>('');
+const newuserEMail = ref('');
 
 function createUser() {
   loadUserData();

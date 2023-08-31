@@ -37,7 +37,6 @@
       </div>
     </div>
   </nav>
-  <Login></Login>
 </template>
 
 <script lang="ts" setup>
