@@ -50,7 +50,7 @@ const openRestart = ref(false);
 //--------------
 let player = true;
 let win = false;
-let gameSize = 7;
+const gameSize = 7;
 const gameMap = ref<Tile[][]>([]);
 type Tile = {
   isEmpty: boolean;

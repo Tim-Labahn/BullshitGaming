@@ -46,5 +46,5 @@
     "suppressImplicitAnyIndexErrors": false,
     "noStrictGenericChecks": false
   },
-  "include": ["**/*.js", "**/*.ts", "**/*.d.ts", "**/*.tsx", "**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

@@ -54,12 +54,20 @@ function game() {
 function checkWinLose() {
   const players = ['✗', '◯'];
   for (let i = 0; i < 3; i++) {
-    for (const player of players)
+    for (const currentPlayer of players)
       if (
-        (gameMap.value[i][0].isCross === player && gameMap.value[i][1].isCross === player && gameMap.value[i][2].isCross === player) ||
-        (gameMap.value[0][i].isCross === player && gameMap.value[1][i].isCross === player && gameMap.value[2][i].isCross === player) ||
-        (gameMap.value[0][0].isCross === player && gameMap.value[1][1].isCross === player && gameMap.value[2][2].isCross === player) ||
-        (gameMap.value[0][2].isCross === player && gameMap.value[1][1].isCross === player && gameMap.value[2][0].isCross === player)
+        (gameMap.value[i][0].isCross === currentPlayer &&
+          gameMap.value[i][1].isCross === currentPlayer &&
+          gameMap.value[i][2].isCross === currentPlayer) ||
+        (gameMap.value[0][i].isCross === currentPlayer &&
+          gameMap.value[1][i].isCross === currentPlayer &&
+          gameMap.value[2][i].isCross === currentPlayer) ||
+        (gameMap.value[0][0].isCross === currentPlayer &&
+          gameMap.value[1][1].isCross === currentPlayer &&
+          gameMap.value[2][2].isCross === currentPlayer) ||
+        (gameMap.value[0][2].isCross === currentPlayer &&
+          gameMap.value[1][1].isCross === currentPlayer &&
+          gameMap.value[2][0].isCross === currentPlayer)
       ) {
         openRestart.value = true;
       } else if (

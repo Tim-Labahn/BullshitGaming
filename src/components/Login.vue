@@ -103,7 +103,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { users, logedInUserID } from '../userInformation';
+import { users, logedInUserID, UserType } from '../userInformation';
 
 const loginStep = ref(0);
 // const date = ref(new Date());
@@ -138,16 +138,14 @@ function checkIfExist() {
     if (users.value.find(user => user.Email.toLowerCase() === userLoginEmail.value.toLowerCase())?.Passwort === userLoginPassword.value) {
       logedInUserID.value = users.value.find(user => user.Email.toLowerCase() === userLoginEmail.value.toLowerCase())?.ID;
       loginStep.value = 6;
-    } else {
     }
-  } else {
   }
   setLocalStorage();
 }
 
 function loadUserData() {
   if (localStorage.getItem('Users') !== null) {
-    users.value = JSON.parse(localStorage.getItem('Users')!);
+    users.value = JSON.parse(localStorage.getItem('Users') ?? '[]');
   }
   setLocalStorage();
 }
@@ -156,11 +154,8 @@ function setLocalStorage() {
   localStorage.setItem('Users', JSON.stringify(users.value));
 }
 
-import { UserType } from '../userInformation';
-
-let logedInUserData = ref<UserType>();
+const logedInUserData = ref<UserType>();
 if (users) {
   logedInUserData.value = users.value.find(user => user.ID === logedInUserID.value);
 }
 </script>
-../Information../Information

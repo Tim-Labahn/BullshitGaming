@@ -1,28 +1,22 @@
 {
   "root": true,
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended-type-checked", // for js project use "plugin:@typescript-eslint/recommended"
-    "plugin:@typescript-eslint/strict-type-checked" // same here without type-checked
-  ],
+  "extends": ["plugin:vue/vue3-essential", "eslint:recommended", "@vue/typescript/recommended"],
+  "ignorePatterns": ["/docs/**/*.*"],
   "rules": {
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-non-null-assertion": "warn",
     "no-constant-binary-expression": "error",
     "no-duplicate-imports": "error",
     "no-template-curly-in-string": "error",
     "no-unreachable-loop": "error",
     "camelcase": ["error", { "ignoreDestructuring": true, "ignoreImports": true }],
-    "curly": "error",
     "no-shadow": "error",
     "no-unused-expressions": "error",
     "no-var": "error",
-    "prefer-const": "warn"
-  },
-  "parserOptions": {
-    "project": ["./tsconfig.json"]
+    "prefer-const": "warn",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "vue/require-v-for-key": "off",
+    "vue/multi-word-component-names": "off"
   },
   "env": {
     "browser": true,

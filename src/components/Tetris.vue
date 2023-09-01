@@ -21,12 +21,12 @@ type Blocktype = {
   positionY: number;
 }[];
 const TICKS_PER_SECOND = 24;
-const gameMap = ref<Blocktype[] | null[]>([]);
+const gameMap = ref<Blocktype[]>([]);
 
 function generateMap() {
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 20; y++) {
-      gameMap.value.push(null);
+      gameMap.value.push();
     }
   }
 }
