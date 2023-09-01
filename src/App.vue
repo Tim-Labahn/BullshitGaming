@@ -30,7 +30,12 @@
           <li class="nav-item">
             <a class="nav-link" href="#" @click="route = 'MathQuiz'">Math Quiz</a>
           </li>
-   
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="route = 'Minesweeper'">Minesweeper</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="route = 'Tetris'">Tetris</a>
+          </li>
         </ul>
       </div>
     </div>
