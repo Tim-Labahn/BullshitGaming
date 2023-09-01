@@ -81,20 +81,17 @@ function gameLoop() {
 }
 
 function blockMovement() {
-  for (let y = 19; y >= 0; y--) {
-    for (let x = 9; x >= 0; x--) {
-      if (
-        (gameMap.value[x][y].color === 'black' && !gameMap.value[x][y + 1]) ||
-        (gameMap.value[x][y].color === 'black' && gameMap.value[x]?.[y + 1]?.color !== 'white')
-      ) {
-        for (let greyY = 0; greyY < gameMap.value[x].length; greyY++) {
-          for (let greyX = 0; greyX < gameMap.value.length; greyX++) {
-            if (gameMap.value[greyX][greyY].color === 'black') {
-              gameMap.value[greyX][greyY].color = 'grey';
-            }
-          }
+  if (gameMap.value.find(c => c.find(tile => tile.color === 'black'))) {
+    for (let greyY = 0; greyY < 20; greyY++) {
+      for (let greyX = 0; greyX < gameMap.value.length; greyX++) {
+        if (gameMap.value[greyX][greyY].color === 'black') {
+          gameMap.value[greyX][greyY].color = 'grey';
         }
       }
+    }
+  }
+  for (let y = 19; y >= 0; y--) {
+    for (let x = 9; x >= 0; x--) {
       if (gameMap.value[x][y].color === 'black' && gameMap.value[x]?.[y + 1]?.color === 'white') {
         gameMap.value[x][y].color = 'white';
         gameMap.value[x][y + 1].color = 'black';
