@@ -57,7 +57,7 @@ const gameMap = ref<TileType[][]>([]);
 generateMap();
 
 function generateMap() {
-  if (gameMap !== null) {
+  if (gameMap.value !== null) {
     gameMap.value = [];
   }
   for (let x = 0; x < 10; x++) {
@@ -87,10 +87,10 @@ function blockMovement() {
         (gameMap.value[x][y].color === 'black' && !gameMap.value[x][y + 1]) ||
         (gameMap.value[x][y].color === 'black' && gameMap.value[x]?.[y + 1]?.color !== 'white')
       ) {
-        for (let y = 0; y < gameMap.value[x].length; y++) {
-          for (let x = 0; x < gameMap.value.length; x++) {
-            if (gameMap.value[x][y].color === 'black') {
-              gameMap.value[x][y].color = 'grey';
+        for (let greyY = 0; greyY < gameMap.value[x].length; greyY++) {
+          for (let greyX = 0; greyX < gameMap.value.length; greyX++) {
+            if (gameMap.value[greyX][greyY].color === 'black') {
+              gameMap.value[greyX][greyY].color = 'grey';
             }
           }
         }
