@@ -1,7 +1,16 @@
 <template>
+  <div style="background-color: grey; width: 400px; height: 100px; position: absolute; left: 750px; top: 106px">‍</div>
   <div class="tetris">
     <button class="btn btn-primary" @click="console.log(gameMap)">Show Game Map</button>
-    <button class="btn btn-primary" @click="spawnTetromine()">spawn tetromine at 4|0</button>
+    <button class="btn btn-primary" @click="spawnTetromine()">spawn tetromine</button>
+    <button class="btn btn-primary" @click="spawnFullRow()">spawnFullRow</button>
+    <dialog :open="lose" style="border-radius: 10px; top: 450px; height: 150px; width: 200px; text-align: center">
+      GAME OVER
+      <br />
+      <br />
+      <br />
+      <button class="btn btn-primary" @click="restart()">Restart</button>
+    </dialog>
     <div class="field d-flex justify-content-center align-items-center pt-5" style="">
       <div v-for="row in gameMap">
         <div v-for="tile in row" style="width: 32px; height: 32px; border: 1px solid black">
@@ -15,6 +24,23 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+
+const pressedKeys = ref({
+  a: false,
+  c: false,
+  ' ': false,
+  d: false,
+  e: false,
+  q: false,
+  s: false,
+});
+
+window.onkeyup = e => {
+  pressedKeys.value[e.key as keyof typeof pressedKeys.value] = false;
+};
+window.onkeydown = e => {
+  pressedKeys.value[e.key as keyof typeof pressedKeys.value] = true;
+};
 
 const J = ref<number[][]>([
   [0, 1, 1, 1],
@@ -47,26 +73,23 @@ const O = ref<number[][]>([
 
 type TileType = {
   color: string;
-  positionX: number;
-  positionY: number;
 };
 
 const TICKS_PER_SECOND = 4;
 const gameMap = ref<TileType[][]>([]);
+const gameSizeX = 10;
+const gameSizeY = 21;
 
 generateMap();
-
 function generateMap() {
   if (gameMap.value !== null) {
     gameMap.value = [];
   }
-  for (let x = 0; x < 10; x++) {
+  for (let x = 0; x < gameSizeX; x++) {
     const rowY: TileType[] = [];
-    for (let y = 0; y < 20; y++) {
+    for (let y = 0; y < gameSizeY; y++) {
       const field = {
         color: 'white',
-        positionX: x,
-        positionY: y,
       };
       const rowX = field;
       rowY.push(rowX);
@@ -75,44 +98,190 @@ function generateMap() {
   }
 }
 
+function restart() {
+  generateMap();
+  lose = false;
+  blockFall();
+  spawnTetromine();
+}
+
 setInterval(gameLoop, 1000 / TICKS_PER_SECOND);
+setInterval(blockMovement, 500 / TICKS_PER_SECOND);
 function gameLoop() {
-  blockMovement();
+  blockFall();
+
+  checkFullRow();
 }
 
 function blockMovement() {
-  if (gameMap.value.find(c => c.find(tile => tile.color === 'black'))) {
-    for (let greyY = 0; greyY < 20; greyY++) {
-      for (let greyX = 0; greyX < gameMap.value.length; greyX++) {
+  function checkBlockcanMoveLeft() {
+    const filteredTiles = [];
+    for (let rowIndex = 0; rowIndex < gameMap.value.length - 1; rowIndex++) {
+      const row = gameMap.value[rowIndex];
+      for (let colIndex = 0; colIndex < row.length; colIndex++) {
+        const currentTile = gameMap.value[rowIndex]?.[colIndex];
+        const tileLeft = gameMap.value[rowIndex - 1]?.[colIndex];
+        if ((currentTile.color === 'black' && tileLeft) || (currentTile.color === 'black' && tileLeft.color !== 'grey')) {
+          filteredTiles.push(currentTile);
+          console.log('push');
+        }
+      }
+    }
+    if (filteredTiles.length <= 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  function checkBlockcanMoveRight() {
+    const filteredTiles = [];
+    for (let rowIndex = 0; rowIndex < gameMap.value.length - 1; rowIndex++) {
+      const row = gameMap.value[rowIndex];
+
+      for (let colIndex = 0; colIndex < row.length; colIndex++) {
+        const currentTile = row[colIndex];
+        const tileLeft = gameMap.value[rowIndex + 1]?.[colIndex];
+
+        if (currentTile.color === 'black' && tileLeft.color !== 'grey') {
+          filteredTiles.push(currentTile);
+        }
+      }
+    }
+    if (filteredTiles.length <= 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  if (pressedKeys.value.a === true) {
+    if (checkBlockcanMoveLeft()) {
+      for (let y = gameSizeY; y >= 0; y--) {
+        for (let x = 0; x <= gameSizeX; x++) {
+          if (gameMap.value[x]?.[y]?.color === 'black' && gameMap.value[x - 1]?.[y]?.color === 'white') {
+            gameMap.value[x][y].color = 'white';
+            gameMap.value[x - 1][y].color = 'black';
+          }
+        }
+      }
+    }
+  }
+  if (pressedKeys.value.d === true) {
+    if (checkBlockcanMoveRight()) {
+      for (let y = gameSizeY; y >= 0; y--) {
+        for (let x = gameSizeX; x >= 0; x--) {
+          if (gameMap.value[x]?.[y]?.color === 'black' && gameMap.value[x + 1]?.[y]?.color === 'white') {
+            gameMap.value[x][y].color = 'white';
+            gameMap.value[x + 1][y].color = 'black';
+          }
+        }
+      }
+    }
+  }
+}
+
+function checkFullRow() {
+  let blockInRow = 0;
+  for (let row = 0; row < gameSizeY; row++) {
+    for (let tile = 0; tile < 10; tile++) {
+      if (gameMap.value[tile][row].color === 'grey') {
+        blockInRow++;
+      }
+    }
+    if (blockInRow === 10) {
+      for (let y = 0; y < 10; y++) {
+        gameMap.value[y].splice(row, 1);
+      }
+      for (let y = 0; y < 10; y++) {
+        const field = {
+          color: 'white',
+        };
+        gameMap.value[y].splice(0, 0, field);
+      }
+    } else {
+      blockInRow = 0;
+    }
+  }
+}
+
+function blockFall() {
+  if (checkBlockCanMoveDown()) {
+    for (let greyY = 0; greyY < gameSizeY; greyY++) {
+      for (let greyX = 0; greyX < gameSizeX; greyX++) {
         if (gameMap.value[greyX][greyY].color === 'black') {
           gameMap.value[greyX][greyY].color = 'grey';
         }
       }
     }
-  }
-  for (let y = 19; y >= 0; y--) {
-    for (let x = 9; x >= 0; x--) {
-      if (gameMap.value[x][y].color === 'black' && gameMap.value[x]?.[y + 1]?.color === 'white') {
-        gameMap.value[x][y].color = 'white';
-        gameMap.value[x][y + 1].color = 'black';
+    spawnTetromine();
+  } else {
+    for (let y = gameSizeY; y >= 0; y--) {
+      for (let x = gameSizeX; x >= 0; x--) {
+        if (gameMap.value[x]?.[y]?.color === 'black' && gameMap.value[x]?.[y + 1]?.color === 'white') {
+          gameMap.value[x][y].color = 'white';
+          gameMap.value[x][y + 1].color = 'black';
+        }
       }
     }
   }
 }
 
+function checkBlockCanMoveDown() {
+  const filteredTiles = [];
+  for (let rowIndex = 0; rowIndex < gameMap.value.length - 1; rowIndex++) {
+    const row = gameMap.value[rowIndex];
+
+    for (let colIndex = 0; colIndex < row.length; colIndex++) {
+      const currentTile = row[colIndex];
+      const tileBelow = gameMap.value[rowIndex][colIndex + 1];
+
+      if ((currentTile.color === 'black' && !tileBelow) || (currentTile.color === 'black' && tileBelow.color === 'grey')) {
+        filteredTiles.push(currentTile);
+      }
+    }
+  }
+  if (filteredTiles.length <= 0) {
+    return false;
+  } else {
+    return filteredTiles;
+  }
+}
+
+let lose = false;
+function gameEnd() {
+  lose = true;
+}
+
 const curentTetromine = ref(0);
 const spawnOrder = ref([J, L, T, I, S, Z, O]);
+
 function spawnTetromine() {
-  console.log('spawned');
-  curentTetromine.value++;
-  if (curentTetromine.value > 6) {
-    curentTetromine.value = 0;
-  }
   for (let row = 0; row < 2; row++) {
-    for (let tile = 0; tile < 4; tile++) {
-      if (spawnOrder.value[curentTetromine.value].value[row][tile] === 1) {
-        gameMap.value[tile + 3][row].color = 'black';
+    for (let tile = 0; tile < 10; tile++) {
+      if (gameMap.value[tile][row].color === 'grey') {
+        gameEnd();
+        return;
       }
+    }
+  }
+  if (!lose) {
+    curentTetromine.value++;
+    if (curentTetromine.value > 6) {
+      curentTetromine.value = 0;
+    }
+    for (let row = 0; row < 2; row++) {
+      for (let tile = 0; tile < 4; tile++) {
+        if (spawnOrder.value[curentTetromine.value].value[row][tile] === 1) {
+          gameMap.value[tile + 3][row].color = 'black';
+        }
+      }
+    }
+  }
+}
+function spawnFullRow() {
+  if (!lose) {
+    for (let tile = 0; tile < gameSizeX; tile++) {
+      gameMap.value[tile][gameSizeY - 1].color = 'black';
     }
   }
 }
@@ -120,7 +289,7 @@ function spawnTetromine() {
 
 <style scoped lang="scss">
 .tetris {
-  background-color: gray;
+  background-color: grey;
   width: 100vw;
   height: 96vh;
 }
