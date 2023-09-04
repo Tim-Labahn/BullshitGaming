@@ -95,7 +95,7 @@ function grandmaUpgrade() {
 }
 
 function spawnGoldenCookie() {
-  const random = Math.random() * 100;
+  const random = Math.floor(Math.random() * 100);
   if (random <= 1) {
     displayGoldenCookie.value = true;
     setTimeout(() => (displayGoldenCookie.value = false), 10000);
