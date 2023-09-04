@@ -2,32 +2,52 @@
   <div class="Minesweeper">
     <h1>Minesweeper</h1>
     <h4>PLACE FLAGS WITH RIGHT CLICK</h4>
-    <dialog :open="startOpen">
+    <dialog :open="startDialog">
       <p>Pick the Map Size!</p>
       <select name="map-größen" id="map-größen" v-model="selectedSize">
         <option value="small">Small</option>
         <option value="medium">Medium</option>
         <option value="large">Large</option>
       </select>
-      <button type="submit" class="pickSize" @click="(startOpen = false), checkSize(selectedSize), game()">Submit</button>
+      <button type="submit" class="pickSize" @click="(startDialog = false), checkSize(selectedSize), game()">Submit</button>
     </dialog>
     <div
-      v-if="selectedSize"
+      v-if="selectedSize && !startDialog"
       class="field"
       :class="{ smallGrid: selectedSize === 'small', midGrid: selectedSize === 'medium', bigGrid: selectedSize === 'large' }"
     >
       <template v-for="(column, indexY) in gameMap">
-        <div class="tile" v-for="(tile, indexX) in column" @click="tileClick(tile)" @contextmenu.prevent="placeFlag(tile)">
-          <div v-if="tile.isOpen">{{ countBombs(indexY, indexX) }}</div>
-          <div v-if="tile.isBomb && tile.isOpen">💣</div>
+        <div class="tile" v-for="(tile, indexX) in column" @click="tileClick(indexX, indexY)" @contextmenu.prevent="placeFlag(tile)">
+          <div v-if="tile.isOpen">{{ countBombs(indexX, indexY) }}</div>
+          <div v-if="tile.isBomb && !tile.isOpen">💣</div>
           <div v-if="tile.isFlag">🚩</div>
           <div v-else-if="!tile.isOpen"></div>
         </div>
       </template>
     </div>
-    <dialog class="winText">
+    <dialog class="winText" :open="restart">
       <p>YOU WON</p>
-      <button class="newGame" @click="startOpen = true"></button>
+      <button
+        class="newGame"
+        @click="
+          resetGame();
+          restart = false;
+        "
+      >
+        Restart
+      </button>
+    </dialog>
+    <dialog class="lose" :open="lostDialog">
+      <p>YOU LOST</p>
+      <button
+        class="newGame"
+        @click="
+          resetGame();
+          lostDialog = false;
+        "
+      >
+        Restart
+      </button>
     </dialog>
   </div>
 </template>
@@ -42,13 +62,15 @@ type Tile = {
 
 const gameMap = ref<Tile[][]>([]);
 let width: number;
-
 let height: number;
-let difficulty: number;
-const startOpen = ref(true);
+let difficulty = 1;
+const startDialog = ref(true);
+const restart = ref(false);
+const lostDialog = ref(false);
 
 //------------------------
 function game() {
+  checkSize(selectedSize.value);
   generateField();
   generateBomb();
 }
@@ -68,113 +90,73 @@ function generateField() {
     gameMap.value.push(rowY);
   }
 }
-// setTimeout(
-// checkArea(indexX, indexY)
-//, 200)
 function generateBomb() {
   for (const column of gameMap.value) {
-    for (const tile of column) {
-      if (column[Math.round(Math.random() * (height - 1))] !== undefined) {
-        column[Math.round(Math.random() * (height - 1))].isBomb = true;
-      }
+    for (let i = 0; i <= difficulty; i++) {
+      column[Math.round(Math.random() * (width - 1))].isBomb = true;
     }
   }
-  gameMap.value[Math.floor(width / 2)][Math.floor(height / 2)].isBomb = false;
-  gameMap.value[Math.floor(width / 2)][Math.floor(height / 2 - 1)].isBomb = false;
-  gameMap.value[Math.floor(width / 2)][Math.floor(height / 2 + 1)].isBomb = false;
-  gameMap.value[Math.floor(width / 2 - 1)][Math.floor(height / 2)].isBomb = false;
-  gameMap.value[Math.floor(width / 2 - 1)][Math.floor(height / 2 - 1)].isBomb = false;
-  gameMap.value[Math.floor(width / 2 - 1)][Math.floor(height / 2 + 1)].isBomb = false;
-  gameMap.value[Math.floor(width / 2 + 1)][Math.floor(height / 2)].isBomb = false;
-  gameMap.value[Math.floor(width / 2 + 1)][Math.floor(height / 2 - 1)].isBomb = false;
-  gameMap.value[Math.floor(width / 2 + 1)][Math.floor(height / 2 + 1)].isBomb = false;
+  const offsets = [
+    [0, 0],
+    [0, 1],
+    [0, -1],
+    [1, 1],
+    [1, -1],
+    [-1, -1],
+    [-1, 0],
+    [1, 0],
+    [-1, 1],
+  ] as const;
+  for (const offset of offsets) {
+    gameMap.value[Math.floor(height / 2 + offset[0])][Math.floor(width / 2 + offset[1])].isBomb = false;
+  }
 }
 
-function countBombs(y: number, x: number) {
+function countBombs(x: number, y: number) {
   let numberOfBombs = 0;
-  if (gameMap.value[y + 1]?.[x]?.isBomb) {
-    numberOfBombs++;
+  const offsets = [
+    [0, 1],
+    [0, -1],
+    [1, 1],
+    [1, -1],
+    [-1, -1],
+    [-1, 0],
+    [1, 0],
+    [-1, 1],
+  ] as const;
+  for (const offset of offsets) {
+    if (gameMap.value[y + offset[0]]?.[x + offset[1]]?.isBomb) {
+      numberOfBombs++;
+    }
   }
-  if (gameMap.value[y - 1]?.[x]?.isBomb) {
-    numberOfBombs++;
-  }
-  if (gameMap.value[y]?.[x + 1]?.isBomb) {
-    numberOfBombs++;
-  }
-  if (gameMap.value[y]?.[x - 1]?.isBomb) {
-    numberOfBombs++;
-  }
-  if (gameMap.value[y + 1]?.[x + 1]?.isBomb) {
-    numberOfBombs++;
-  }
-  if (gameMap.value[y - 1]?.[x + 1]?.isBomb) {
-    numberOfBombs++;
-  }
-  if (gameMap.value[y - 1]?.[x - 1]?.isBomb) {
-    numberOfBombs++;
-  }
-  if (gameMap.value[y + 1]?.[x - 1]?.isBomb) {
-    numberOfBombs++;
-  }
-
   return numberOfBombs;
 }
 
-// function render() {
-//   const gameField = document.querySelector('.field');
-//   if (gameField !== null) {
-//     gameField.innerHTML = '';
-//   }
-//   gameField?.setAttribute('style', `grid-template-columns: repeat(${width},1fr); width: ${50 * width}px;`);
-//   for (let y = 0; y < height; y++) {
-//     for (let x = 0; x < width; x++) {
-//       const tile = document.createElement('div');
-//       tile.className = 'tile';
-//       if (x === Math.floor(width / 2) && y === Math.floor(height / 2)) {
-//         tile.setAttribute('isMiddle', 'middle');
-//       }
-//       tile.onclick = () => {
-//         tileClick(x, y);
-//       };
-//       tile.oncontextmenu = e => {
-//         e.preventDefault();
-//         placeFlag(x, y);
-//       };
-//       gameField?.appendChild(tile);
-//       if (gameMap.value[x][y].isOpen) {
-//         tile.setAttribute('isOpen', 'open');
-//         if (gameMap.value[x][y].isBomb) {
-//           tile.innerHTML = '💣';
-//         } else {
-//           tile.innerHTML = `${countBombs(x, y)}`;
-//           if (countBombs(x, y) === 0) {
-//             setTimeout(() => {
-//               checkArea(x, y);
-//             }, 200);
-//           }
-//         }
-//       } else if (!gameMap.value[x][y].isOpen) {
-//         if (gameMap.value[x][y].isFlag) {
-//           tile.innerHTML = '🚩';
-//         } else {
-//           tile.innerHTML = '';
-//         }
-//       }
-//     }
-//   }
-// }
+function resetGame() {
+  gameMap.value = [];
+  selectedSize.value = 'small';
+  startDialog.value = true;
+}
 
-function tileClick(tile: Tile) {
+function tileClick(x: number, y: number) {
+  if (!gameMap.value[y]?.[x]) {
+    return;
+  }
+  const tile = gameMap.value[y][x];
+
   if (tile.isFlag) {
     return;
   }
+
   if (tile.isBomb) {
-    lost();
+    lostDialog.value = true;
   } else {
     if (!tile.isOpen) {
       tile.isOpen = true;
+      setTimeout(() => checkArea(x, y), 200);
     }
   }
+
   checkWin();
 }
 
@@ -186,29 +168,24 @@ function placeFlag(tile: Tile) {
   }
 }
 
-function lost() {
-  gameMap.value = [];
-  startOpen.value = true;
-}
-
 function checkWin() {
-  if (gameMap.value.every(a => a.every(b => b.isOpen || b.isBomb))) {
-    const winText = document.querySelector('.winText') as HTMLDialogElement;
-    winText.showModal();
-    game();
+  const isGameWon = gameMap.value.every(a => a.every(b => b.isOpen || b.isBomb));
+
+  if (isGameWon && !lostDialog.value) {
+    restart.value = true;
   }
 }
 
-function checkSize(selectedSize: string) {
-  if (selectedSize) {
-    if (selectedSize === 'small') {
+function checkSize(currentSelectedSize: string) {
+  if (currentSelectedSize) {
+    if (currentSelectedSize === 'small') {
       width = 11;
       height = 9;
-      difficulty = 2;
-    } else if (selectedSize === 'medium') {
+      difficulty = 1;
+    } else if (currentSelectedSize === 'medium') {
       width = 23;
       height = 11;
-      difficulty = 3;
+      difficulty = 2;
     } else {
       width = 37;
       height = 13;
@@ -217,29 +194,22 @@ function checkSize(selectedSize: string) {
   }
 }
 function checkArea(x: number, y: number) {
-  if (!gameMap.value[x + 0]?.[y + 1]?.isOpen) {
-    tileClick(x, y + 1);
-  }
-  if (!gameMap.value[x + 0]?.[y - 1]?.isOpen) {
-    tileClick(x, y - 1);
-  }
-  if (!gameMap.value[x + 1]?.[y + 1]?.isOpen) {
-    tileClick(x + 1, y + 1);
-  }
-  if (!gameMap.value[x + 1]?.[y - 1]?.isOpen) {
-    tileClick(x + 1, y - 1);
-  }
-  if (!gameMap.value[x - 1]?.[y + 1]?.isOpen) {
-    tileClick(x - 1, y + 1);
-  }
-  if (!gameMap.value[x - 1]?.[y - 1]?.isOpen) {
-    tileClick(x - 1, y - 1);
-  }
-  if (!gameMap.value[x - 1]?.[y + 0]?.isOpen) {
-    tileClick(x - 1, y);
-  }
-  if (!gameMap.value[x + 1]?.[y + 0]?.isOpen) {
-    tileClick(x + 1, y);
+  if (countBombs(x, y) === 0) {
+    const offsets = [
+      [0, 1],
+      [0, -1],
+      [1, 1],
+      [1, -1],
+      [-1, -1],
+      [-1, 0],
+      [1, 0],
+      [-1, 1],
+    ] as const;
+    for (const offset of offsets) {
+      if (!gameMap.value[y + offset[0]]?.[x + offset[1]]?.isOpen) {
+        tileClick(x + offset[1], y + offset[0]);
+      }
+    }
   }
 }
 </script>
@@ -278,6 +248,8 @@ $tileSize: 50px;
 }
 .field {
   background-color: $primary-color;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 .tile:nth-child(even) {
   background-color: $primary-color-lightened;

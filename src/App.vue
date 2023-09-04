@@ -42,6 +42,9 @@
   </nav>
   <div class="d-flex justify-content-center align-items-center">
     <div class="Game" style="height: 90%">
+      <div v-if="route === ''">
+        <Login></Login>
+      </div>
       <div v-if="route === 'Home'">
         <Home></Home>
       </div>
@@ -74,7 +77,7 @@
 // import { ref } from 'vue';
 // import Login from './components/Login.vue';
 import Home from './components/Home.vue';
-
+import Login from './components/Login.vue';
 import Tetris from './components/Tetris.vue';
 import ConnectFour from './components/ConnectFour.vue';
 import CookieClicker from './components/cookieClicker.vue';
