@@ -2,7 +2,7 @@
   <div style="background-color: grey; width: 400px; height: 100px; position: absolute; left: 750px; top: 106px">‍</div>
   <div class="tetris">
     <button class="btn btn-primary" @click="console.log(gameMap)">Show Game Map</button>
-    <button class="btn btn-primary" @click="spawnTetromine()">spawn tetromine</button>
+    <button class="btn btn-primary" @click="spawnTetromini()">spawnTetromini</button>
     <button class="btn btn-primary" @click="spawnFullRow()">spawnFullRow</button>
     <dialog :open="lose" style="border-radius: 10px; top: 450px; height: 150px; width: 200px; text-align: center">
       GAME OVER
@@ -102,7 +102,7 @@ function restart() {
   generateMap();
   lose = false;
   blockFall();
-  spawnTetromine();
+  spawnTetromini();
 }
 
 setInterval(gameLoop, 1000 / TICKS_PER_SECOND);
@@ -113,20 +113,19 @@ function gameLoop() {
   checkFullRow();
 }
 function blockMovement() {
-  function checkIsBlocked(lr: 1 | -1) {
+  function checkIsBlocked(xOffset: -1 | 1) {
     for (let rowIndex = 0; rowIndex < gameMap.value.length; rowIndex++) {
       const row = gameMap.value[rowIndex];
       for (let colIndex = 0; colIndex < row.length; colIndex++) {
-        const currentTile = gameMap.value[rowIndex]?.[colIndex];
-        const tileLR = gameMap.value[rowIndex + lr]?.[colIndex];
-        if (tileLR && tileLR.color === 'white' && currentTile.color === 'black') {
-          return false;
+        const currentTile = gameMap.value[rowIndex][colIndex];
+        const tileLR = gameMap.value[rowIndex + xOffset]?.[colIndex];
+        if (currentTile.color === 'black' && (!tileLR || (tileLR && tileLR.color === 'white'))) {
+          return true;
         }
       }
     }
-    return true;
+    return false;
   }
-
   if (pressedKeys.value.a && !checkIsBlocked(-1)) {
     for (let y = gameMap.value[0].length - 1; y >= 0; y--) {
       for (let x = 0; x < gameMap.value.length; x++) {
@@ -182,7 +181,7 @@ function blockFall() {
         }
       }
     }
-    spawnTetromine();
+    spawnTetromini();
   } else {
     for (let y = gameSizeY; y >= 0; y--) {
       for (let x = gameSizeX; x >= 0; x--) {
@@ -224,7 +223,7 @@ function gameEnd() {
 const curentTetromine = ref(0);
 const spawnOrder = ref([J, L, T, I, S, Z, O]);
 
-function spawnTetromine() {
+function spawnTetromini() {
   for (let row = 0; row < 2; row++) {
     for (let tile = 0; tile < 10; tile++) {
       if (gameMap.value[tile][row].color === 'grey') {
