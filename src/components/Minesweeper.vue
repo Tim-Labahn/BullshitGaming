@@ -199,13 +199,13 @@ function checkWin() {
   }
 }
 
-function checkSize(selectedSize: string) {
-  if (selectedSize) {
-    if (selectedSize === 'small') {
+function checkSize(currentSelectedSize: string) {
+  if (currentSelectedSize) {
+    if (currentSelectedSize === 'small') {
       width = 11;
       height = 9;
       difficulty = 2;
-    } else if (selectedSize === 'medium') {
+    } else if (currentSelectedSize === 'medium') {
       width = 23;
       height = 11;
       difficulty = 3;
