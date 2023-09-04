@@ -55,8 +55,8 @@ const T = ref<number[][]>([
   [0, 1, 0, 0],
 ]);
 const I = ref<number[][]>([
-  [1, 1, 1, 1],
   [0, 0, 0, 0],
+  [1, 1, 1, 1],
 ]);
 const S = ref<number[][]>([
   [0, 0, 1, 1],
@@ -75,7 +75,7 @@ type TileType = {
   color: string;
 };
 
-const TICKS_PER_SECOND = 4;
+const TICKS_PER_SECOND = 0.5;
 const gameMap = ref<TileType[][]>([]);
 const gameSizeX = 10;
 const gameSizeY = 21;
@@ -106,74 +106,43 @@ function restart() {
 }
 
 setInterval(gameLoop, 1000 / TICKS_PER_SECOND);
-setInterval(blockMovement, 500 / TICKS_PER_SECOND);
+setInterval(blockMovement, 1000 / (TICKS_PER_SECOND * 5));
 function gameLoop() {
   blockFall();
 
   checkFullRow();
 }
-
 function blockMovement() {
-  function checkBlockcanMoveLeft() {
-    const filteredTiles = [];
-    for (let rowIndex = 0; rowIndex < gameMap.value.length - 1; rowIndex++) {
+  function checkIsBlocked(lr: 1 | -1) {
+    for (let rowIndex = 0; rowIndex < gameMap.value.length; rowIndex++) {
       const row = gameMap.value[rowIndex];
       for (let colIndex = 0; colIndex < row.length; colIndex++) {
         const currentTile = gameMap.value[rowIndex]?.[colIndex];
-        const tileLeft = gameMap.value[rowIndex - 1]?.[colIndex];
-        if ((currentTile.color === 'black' && tileLeft) || (currentTile.color === 'black' && tileLeft.color !== 'grey')) {
-          filteredTiles.push(currentTile);
-          console.log('push');
+        const tileLR = gameMap.value[rowIndex + lr]?.[colIndex];
+        if (tileLR && tileLR.color === 'white' && currentTile.color === 'black') {
+          return false;
         }
       }
     }
-    if (filteredTiles.length <= 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  function checkBlockcanMoveRight() {
-    const filteredTiles = [];
-    for (let rowIndex = 0; rowIndex < gameMap.value.length - 1; rowIndex++) {
-      const row = gameMap.value[rowIndex];
-
-      for (let colIndex = 0; colIndex < row.length; colIndex++) {
-        const currentTile = row[colIndex];
-        const tileLeft = gameMap.value[rowIndex + 1]?.[colIndex];
-
-        if (currentTile.color === 'black' && tileLeft.color !== 'grey') {
-          filteredTiles.push(currentTile);
-        }
-      }
-    }
-    if (filteredTiles.length <= 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return true;
   }
 
-  if (pressedKeys.value.a === true) {
-    if (checkBlockcanMoveLeft()) {
-      for (let y = gameSizeY; y >= 0; y--) {
-        for (let x = 0; x <= gameSizeX; x++) {
-          if (gameMap.value[x]?.[y]?.color === 'black' && gameMap.value[x - 1]?.[y]?.color === 'white') {
-            gameMap.value[x][y].color = 'white';
-            gameMap.value[x - 1][y].color = 'black';
-          }
+  if (pressedKeys.value.a && !checkIsBlocked(-1)) {
+    for (let y = gameMap.value[0].length - 1; y >= 0; y--) {
+      for (let x = 0; x < gameMap.value.length; x++) {
+        if (gameMap.value[x][y].color === 'black' && gameMap.value[x - 1] && gameMap.value[x - 1][y].color === 'white') {
+          gameMap.value[x][y].color = 'white';
+          gameMap.value[x - 1][y].color = 'black';
         }
       }
     }
   }
-  if (pressedKeys.value.d === true) {
-    if (checkBlockcanMoveRight()) {
-      for (let y = gameSizeY; y >= 0; y--) {
-        for (let x = gameSizeX; x >= 0; x--) {
-          if (gameMap.value[x]?.[y]?.color === 'black' && gameMap.value[x + 1]?.[y]?.color === 'white') {
-            gameMap.value[x][y].color = 'white';
-            gameMap.value[x + 1][y].color = 'black';
-          }
+  if (pressedKeys.value.d && !checkIsBlocked(+1)) {
+    for (let y = gameMap.value[0].length - 1; y >= 0; y--) {
+      for (let x = gameMap.value.length - 1; x >= 0; x--) {
+        if (gameMap.value[x][y].color === 'black' && gameMap.value[x + 1] && gameMap.value[x + 1][y].color === 'white') {
+          gameMap.value[x][y].color = 'white';
+          gameMap.value[x + 1][y].color = 'black';
         }
       }
     }
