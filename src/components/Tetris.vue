@@ -75,7 +75,7 @@ type TileType = {
   color: string;
 };
 
-const TICKS_PER_SECOND = 0.5;
+const TICKS_PER_SECOND = 3;
 const gameMap = ref<TileType[][]>([]);
 const gameSizeX = 10;
 const gameSizeY = 21;
@@ -119,7 +119,7 @@ function blockMovement() {
       for (let colIndex = 0; colIndex < row.length; colIndex++) {
         const currentTile = gameMap.value[rowIndex][colIndex];
         const tileLR = gameMap.value[rowIndex + xOffset]?.[colIndex];
-        if (currentTile.color === 'black' && (!tileLR || (tileLR && tileLR.color === 'white'))) {
+        if (currentTile.color === 'black' && (!tileLR || (tileLR && tileLR.color === 'grey'))) {
           return true;
         }
       }
