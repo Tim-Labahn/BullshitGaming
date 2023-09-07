@@ -42,6 +42,9 @@
 import { ref } from 'vue';
 import { users, loggedInUserID, UserType } from './userInformation';
 import { route } from '../../Route';
+
+import bcrypt from 'bcryptjs';
+
 const loginStep = ref(0);
 const userLoginEmail = ref('');
 const userLoginPassword = ref('');
@@ -54,7 +57,7 @@ function createUser() {
   loadUserData();
   users.value.push({
     ID: newUserID.value,
-    Passwort: newUserPasswort.value ?? '',
+    PasswortHash: bcrypt.hashSync(newUserPasswort.value, 8) ?? '',
     Email: newUserEmail.value ?? '',
   });
   setLocalStorage();
@@ -63,7 +66,13 @@ function checkIfExist() {
   loadUserData();
   if (users.value.find(user => user.Email.toLowerCase() === userLoginEmail.value.toLowerCase())) {
     // return true;
-    if (users.value.find(user => user.Email.toLowerCase() === userLoginEmail.value.toLowerCase())?.Passwort === userLoginPassword.value) {
+
+    if (
+      bcrypt.compareSync(
+        userLoginPassword.value,
+        users.value.find(user => user.Email.toLowerCase() === userLoginEmail.value.toLowerCase())?.PasswortHash ?? ''
+      )
+    ) {
       loggedInUserID.value = users.value.find(user => user.Email.toLowerCase() === userLoginEmail.value.toLowerCase())?.ID;
       loginStep.value = 2;
     }

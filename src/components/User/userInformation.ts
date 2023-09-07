@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 export type UserType = {
   ID: number;
-  Passwort: string;
+  PasswortHash: string;
   Email: string;
 };
 
