@@ -33,6 +33,6 @@
 </template>
 
 <script setup lang="ts">
-import { route } from '../userInformation';
+import { route } from '../../Route';
 // import TicTacToe from './TicTacToe.vue';
 </script>

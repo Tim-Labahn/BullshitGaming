@@ -81,16 +81,15 @@
 <script lang="ts" setup>
 // import { ref } from 'vue';
 // import Login from './components/Login.vue';
-import Home from './components/Home.vue';
-import Login from './components/Login.vue';
-import Tetris from './components/Tetris.vue';
-import ConnectFour from './components/ConnectFour.vue';
-import CookieClicker from './components/cookieClicker.vue';
-import TicTacToe from './components/TicTacToe.vue';
-import MathQuiz from './components/MathQuiz.vue';
-import Minesweeper from './components/Minesweeper.vue';
-
-import { route } from './userInformation';
+import Home from './components/Website/Home.vue';
+import Login from './components/User/Login.vue';
+import Tetris from './components/Games/Tetris/Tetris.vue';
+import ConnectFour from './components/Games/ConnectFour.vue';
+import CookieClicker from './components/Games/CookieClicker/cookieClicker.vue';
+import TicTacToe from './components/Games/TicTacToe.vue';
+import MathQuiz from './components/Games/MathQuiz.vue';
+import Minesweeper from './components/Games/Minesweeper.vue';
+import { route } from './Route';
 </script>
 
 <style scoped></style>

@@ -40,8 +40,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { users, loggedInUserID, UserType, route } from '../userInformation';
-
+import { users, loggedInUserID, UserType } from './userInformation';
+import { route } from '../../Route';
 const loginStep = ref(0);
 const userLoginEmail = ref('');
 const userLoginPassword = ref('');
