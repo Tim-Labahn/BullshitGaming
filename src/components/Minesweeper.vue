@@ -17,9 +17,27 @@
       :class="{ smallGrid: selectedSize === 'small', midGrid: selectedSize === 'medium', bigGrid: selectedSize === 'large' }"
     >
       <template v-for="(column, indexY) in gameMap">
-        <div class="tile" v-for="(tile, indexX) in column" @click="tileClick(indexX, indexY)" @contextmenu.prevent="placeFlag(tile)">
-          <div v-if="tile.isOpen">{{ countBombs(indexX, indexY) }}</div>
-          <div v-if="tile.isBomb && !tile.isOpen">💣</div>
+        <div
+          class="tile"
+          v-for="(tile, indexX) in column"
+          @click="tileClick(indexX, indexY)"
+          @contextmenu.prevent="placeFlag(tile)"
+          :class="{ tileOpen: tile.isOpen }"
+        >
+          <div
+            v-if="tile.isOpen && countBombs(indexX, indexY) !== 0"
+            :class="{
+              blueColor: countBombs(indexX, indexY) === 1,
+              greenColor: countBombs(indexX, indexY) === 2,
+              redColor: countBombs(indexX, indexY) === 3,
+              purpleColor: countBombs(indexX, indexY) === 4,
+              maroonColor: countBombs(indexX, indexY) === 5,
+            }"
+          >
+            {{ countBombs(indexX, indexY) }}
+          </div>
+          <div v-if="tile.isOpen && countBombs(indexX, indexY) === 0"></div>
+          <div v-if="tile.isBomb && tile.isOpen">💣</div>
           <div v-if="tile.isFlag">🚩</div>
           <div v-else-if="!tile.isOpen"></div>
         </div>
@@ -231,6 +249,22 @@ $tileSize: 50px;
   margin: 0;
   background-color: $white-color;
 }
+
+.blueColor {
+  color: blue;
+}
+.redColor {
+  color: red;
+}
+.greenColor {
+  color: green;
+}
+.purpleColor {
+  color: purple;
+}
+.maroonColor {
+  color: maroon;
+}
 .smallGrid {
   grid-template-columns: repeat(11, 1fr);
   width: calc(11 * $tileSize);
@@ -278,10 +312,10 @@ h4 {
   background-color: #8d9e5f;
 }
 
-.tile[isOpen] {
+.tileOpen {
   background-color: #d5b89a;
 }
-.tile[isOpen]:nth-child(even) {
+.tileOpen:nth-child(even) {
   background-color: #ffe8d6;
 }
 dialog {

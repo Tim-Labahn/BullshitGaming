@@ -82,9 +82,9 @@ function setLocalStorage() {
   localStorage.setItem('Users', JSON.stringify(users.value));
 }
 
-const logedInUserData = ref<UserType>();
+const loggedInUserData = ref<UserType>();
 if (users) {
-  logedInUserData.value = users.value.find(user => user.ID === loggedInUserID.value);
+  loggedInUserData.value = users.value.find(user => user.ID === loggedInUserID.value);
 }
 </script>
 <style lang="scss" scoped>
