@@ -1,9 +1,14 @@
 import { ref } from 'vue';
 
 export type UserType = {
-  ID: number;
-  Passwort: string;
-  Email: string;
+  id: number;
+  passwort: string;
+  email: string;
+  player?: { cookiesInTotal: number; cookies: number; clickValue: number; passiveClicks: number };
+  upgrades?: {
+    clickUpgradeLevel: number;
+    grandmaUpgradeLevel: number;
+  };
 };
 
 export const loggedInUserID = ref<number | undefined>();
