@@ -39,7 +39,7 @@
           <div v-if="tile.isOpen && countBombs(indexX, indexY) === 0"></div>
           <div v-if="tile.isBomb && tile.isOpen">💣</div>
           <div v-if="tile.isFlag">🚩</div>
-          <div v-else-if="!tile.isOpen"></div>
+          <div v-else-if="tile.isOpen"></div>
         </div>
       </template>
     </div>
