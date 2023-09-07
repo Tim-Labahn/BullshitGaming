@@ -14,27 +14,32 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav justify-content-between w-100">
+          <div class="d-flex">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#" @click="route = 'Home'">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'TicTacToe'">TicTacToe</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'CookieClicker'">Cookie Clicker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'ConnectFour'">Connect Four</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'MathQuiz'">Math Quiz</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'Minesweeper'">Minesweeper</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'Tetris'">Tetris</a>
+            </li>
+          </div>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" @click="route = 'Home'">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="route = 'TicTacToe'">TicTacToe</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="route = 'CookieClicker'">Cookie Clicker</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="route = 'ConnectFour'">Connect Four</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="route = 'MathQuiz'">Math Quiz</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="route = 'Minesweeper'">Minesweeper</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click="route = 'Tetris'">Tetris</a>
+            <a class="nav-link" href="#" @click="route = ''">Login</a>
           </li>
         </ul>
       </div>
