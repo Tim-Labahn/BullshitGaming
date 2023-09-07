@@ -57,9 +57,8 @@ function createUser() {
   loadUserData();
   users.value.push({
     id: newUserID.value,
-    passwort: newUserPasswort.value ?? '',
     email: newUserEmail.value ?? '',
-    PasswortHash: bcrypt.hashSync(newUserPasswort.value, 8) ?? '',
+    passwortHash: bcrypt.hashSync(newUserPasswort.value, 8) ?? '',
   });
   setLocalStorage();
 }
@@ -71,7 +70,7 @@ function checkIfExist() {
     if (
       bcrypt.compareSync(
         userLoginPassword.value,
-        users.value.find(user => user.email.toLowerCase() === userLoginEmail.value.toLowerCase())?.PasswortHash ?? ''
+        users.value.find(user => user.email.toLowerCase() === userLoginEmail.value.toLowerCase())?.passwortHash ?? ''
       )
     ) {
       loggedInUserID.value = users.value.find(user => user.email.toLowerCase() === userLoginEmail.value.toLowerCase())?.id;
