@@ -1,3 +1,3 @@
 import { ref } from 'vue';
 
-export const route = ref('');
+export const route = ref<'Home' | 'TicTacToe' | 'CookieClicker' | 'ConnectFour' | 'MathQuiz' | 'Minesweeper' | 'Tetris' | 'Login'>('Home');

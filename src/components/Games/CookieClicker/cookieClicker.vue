@@ -39,6 +39,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import ShowCookies from './ShowCookies.vue';
+import { users, loggedInUserID } from '../../User/userInformation';
+import { route } from '../../../Route';
 const biggerCookie = ref('');
 const displayGoldenCookie = ref(false);
 const frenzyActive = ref(false);
@@ -52,7 +54,26 @@ const upgrades = ref({
   clickUpgradeLevel: 1,
   grandmaUpgradeLevel: 1,
 });
+if (localStorage.getItem('Users') !== null) {
+  const foundUser = users.value.find(user => user.id === loggedInUserID.value);
+  if (foundUser?.player)
+    player.value = {
+      cookiesInTotal: foundUser.player.cookiesInTotal,
+      cookies: foundUser.player.cookies,
+      clickValue: foundUser.player.clickValue,
+      passiveClicks: foundUser.player.passiveClicks,
+    };
+  if (foundUser?.upgrades) {
+    upgrades.value = {
+      clickUpgradeLevel: foundUser.upgrades.clickUpgradeLevel,
+      grandmaUpgradeLevel: foundUser.upgrades.grandmaUpgradeLevel,
+    };
+  }
+}
 
+if (route.value === 'CookieClicker') {
+  loadData();
+}
 const TICKS_PER_SECOND = 1;
 
 setInterval(() => (passiveIncome(), spawnGoldenCookie()), 1000 / TICKS_PER_SECOND);
@@ -77,12 +98,14 @@ function getCookies(cookieSum: number) {
 function cookieClick() {
   getCookies(player.value.clickValue);
   setTimeout(() => (biggerCookie.value = ''), 100);
+  saveData();
 }
 function clickUpgrade() {
   if (player.value.cookies >= clickUpgradeCost()) {
     player.value.clickValue++;
     player.value.cookies -= clickUpgradeCost();
     upgrades.value.clickUpgradeLevel++;
+    saveData();
   }
 }
 
@@ -91,6 +114,7 @@ function grandmaUpgrade() {
     player.value.passiveClicks++;
     player.value.cookies -= grandmaUpgradeCost();
     upgrades.value.grandmaUpgradeLevel++;
+    saveData();
   }
 }
 
@@ -106,6 +130,22 @@ function frenzy() {
   displayGoldenCookie.value = false;
   frenzyActive.value = true;
   setTimeout(() => (frenzyActive.value = false), 7000);
+}
+
+function saveData() {
+  const foundUser = users.value.find(user => user.id === loggedInUserID.value);
+  if (foundUser) {
+    foundUser.player = player.value;
+    foundUser.upgrades = upgrades.value;
+  }
+  localStorage.setItem('Users', JSON.stringify(users.value));
+}
+
+function loadData() {
+  if (localStorage.getItem('Users') !== null) {
+    users.value = JSON.parse(localStorage.getItem('Users') ?? '[]');
+  }
+  saveData();
 }
 </script>
 

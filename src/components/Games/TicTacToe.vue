@@ -116,7 +116,7 @@ function generateField() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(/gruene-schmutzige-tafel.jpg);
+  background-image: url(../..//gruene-schmutzige-tafel.jpg);
   width: 100vw;
   color: #ffffff;
 }
