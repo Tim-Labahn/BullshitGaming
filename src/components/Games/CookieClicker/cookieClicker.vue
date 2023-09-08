@@ -39,8 +39,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import ShowCookies from './ShowCookies.vue';
-import { users, loggedInUserID } from '../../User/userInformation';
+import { users, loggedInUserEmail } from '../../User/userInformation';
 import { route } from '../../../Route';
+import * as API from '../../../API';
 const biggerCookie = ref('');
 const displayGoldenCookie = ref(false);
 const frenzyActive = ref(false);
@@ -55,7 +56,7 @@ const upgrades = ref({
   grandmaUpgradeLevel: 1,
 });
 if (localStorage.getItem('Users') !== null) {
-  const foundUser = users.value.find(user => user.id === loggedInUserID.value);
+  const foundUser = users.value.find(user => user.email === loggedInUserEmail.value);
   if (foundUser?.player)
     player.value = {
       cookiesInTotal: foundUser.player.cookiesInTotal,
@@ -133,7 +134,7 @@ function frenzy() {
 }
 
 function saveData() {
-  const foundUser = users.value.find(user => user.id === loggedInUserID.value);
+  const foundUser = users.value.find(user => user.email === loggedInUserEmail.value);
   if (foundUser) {
     foundUser.player = player.value;
     foundUser.upgrades = upgrades.value;

@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ref } from 'vue';
 
@@ -16,32 +16,32 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+//data
+export async function getList() {
+  const querySnapshot = await getDocs(collection(db, 'todolist_items'));
+  return querySnapshot.docs
+    .map(item => ({ ...(item.data() as { name: string }), mail: item.id }))
+    .sort(function (a, b) {
+      return a.name.localeCompare(b.name);
+    });
+}
 
-// export async function getList() {
-//   const querySnapshot = await getDocs(collection(db, 'todolist_items'));
-//   return querySnapshot.docs
-//     .map(item => ({ ...(item.data() as { name: string }), id: item.id }))
-//     .sort(function (a, b) {
-//       return a.name.localeCompare(b.name);
-//     });
-// }
+export async function updateItem(itemID: string, itemData: string) {
+  await updateDoc(doc(db, 'todolist_items', itemID), {
+    name: itemData,
+  });
+}
 
-// export async function updateItem(itemID: string, itemData: string) {
-//   await updateDoc(doc(db, 'todolist_items', itemID), {
-//     name: itemData,
-//   });
-// }
+export async function addItem(itemData: string) {
+  await addDoc(collection(db, 'todolist_items'), {
+    name: itemData,
+  });
+}
 
-// export async function addItem(itemData: string) {
-//   await addDoc(collection(db, 'todolist_items'), {
-//     name: itemData,
-//   });
-// }
-
-// export async function deleteItem(itemID: string) {
-//   await deleteDoc(doc(db, 'todolist_items', itemID));
-// }
-
+export async function deleteItem(itemID: string) {
+  await deleteDoc(doc(db, 'todolist_items', itemID));
+}
+//login
 export async function login(email: string, password: string): Promise<void> {
   console.log('login start');
   const auth = getAuth();

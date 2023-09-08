@@ -11,6 +11,6 @@ export type UserType = {
   passwortHash: string;
 };
 
-export const loggedInUserID = ref<number | undefined>();
+export const loggedInUserEmail = ref<string | undefined>();
 export const users = ref<UserType[]>([]);
 localStorage.setItem('LocalUserList', JSON.stringify(users.value));

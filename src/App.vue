@@ -38,11 +38,11 @@
               <a class="nav-link" href="#" @click="route = 'Tetris'">Tetris</a>
             </li>
           </div>
-          <li class="nav-item" v-if="loggedInUserID === undefined">
+          <li class="nav-item" v-if="loggedInUserEmail === undefined">
             <a class="nav-link" href="#" @click="route = 'Login'">Login</a>
           </li>
-          <li class="nav-item" v-else>
-            <a class="nav-link" href="#" @click="loggedInUserID = undefined">Logout</a>
+          <li class="nav-item" v-else-if="loggedInUserEmail !== undefined">
+            <a class="nav-link" href="#" @click="loggedInUserEmail = undefined">Logout</a>
           </li>
         </ul>
       </div>
@@ -93,7 +93,7 @@ import TicTacToe from './components/Games/TicTacToe.vue';
 import MathQuiz from './components/Games/MathQuiz.vue';
 import Minesweeper from './components/Games/Minesweeper.vue';
 import { route } from './Route';
-import { loggedInUserID } from './components/User/userInformation';
+import { loggedInUserEmail } from './components/User/userInformation';
 </script>
 
 <style scoped></style>

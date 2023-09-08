@@ -21,7 +21,7 @@
           <h3>Bullshit Gaming-Konto erstellen</h3>
           <form
             @submit.prevent="
-              API.register(newUserName, newUserEmail, newUserPasswort), (loggedInUserID = newUserID), (loginStep = 0), (route = 'Home')
+              API.register(newUserName, newUserEmail, newUserPasswort), (loggedInUserEmail = newUserEmail), (loginStep = 0), (route = 'Home')
             "
           >
             <div>
@@ -47,57 +47,16 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { users, loggedInUserID, UserType } from '.././userInformation';
+import { users, loggedInUserEmail, UserType } from '.././userInformation';
 import { route } from '../../../Route';
 import * as API from '../../.././API';
 const loginStep = ref(0);
 const userLoginEmail = ref('');
 const userLoginPassword = ref('');
 
-const newUserID = ref(+Math.random().toString().substring(2));
 const newUserPasswort = ref('');
 const newUserEmail = ref('');
-<<<<<<< HEAD:src/components/User/auth/Login.vue
 const newUserName = ref('');
-=======
-function createUser() {
-  loadUserData();
-  users.value.push({
-    id: newUserID.value,
-    email: newUserEmail.value ?? '',
-    passwortHash: bcrypt.hashSync(newUserPasswort.value, 8) ?? '',
-  });
-  setLocalStorage();
-}
-function checkIfExist() {
-  loadUserData();
-  if (users.value.find(user => user.email.toLowerCase() === userLoginEmail.value.toLowerCase())) {
-    // return true;
-
-    if (
-      bcrypt.compareSync(
-        userLoginPassword.value,
-        users.value.find(user => user.email.toLowerCase() === userLoginEmail.value.toLowerCase())?.passwortHash ?? ''
-      )
-    ) {
-      loggedInUserID.value = users.value.find(user => user.email.toLowerCase() === userLoginEmail.value.toLowerCase())?.id;
-      loginStep.value = 2;
-    }
-  }
-  setLocalStorage();
-}
-
-function loadUserData() {
-  if (localStorage.getItem('Users') !== null) {
-    users.value = JSON.parse(localStorage.getItem('Users') ?? '[]');
-  }
-  setLocalStorage();
-}
-
-function setLocalStorage() {
-  localStorage.setItem('Users', JSON.stringify(users.value));
-}
->>>>>>> 61a84e3affc203086d1ded3242a30602489a6e6e:src/components/User/Login.vue
 
 const loggedInUserData = ref<UserType>();
 
@@ -111,7 +70,7 @@ async function login() {
 }
 
 if (users) {
-  loggedInUserData.value = users.value.find(user => user.id === loggedInUserID.value);
+  loggedInUserData.value = users.value.find(user => user.email === loggedInUserEmail.value);
 }
 </script>
 <style lang="scss" scoped>
