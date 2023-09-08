@@ -13,6 +13,7 @@
     "@vue/eslint-config-typescript": "^11.0.3",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.1",
+    "firebase": "^10.3.1",
     "sass": "^1.66.1",
     "vue": "^3.3.4"
   },

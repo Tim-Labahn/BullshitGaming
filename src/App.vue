@@ -82,7 +82,7 @@
 // import { ref } from 'vue';
 // import Login from './components/Login.vue';
 import Home from './components/Website/Home.vue';
-import Login from './components/User/Login.vue';
+import Login from './components/User/auth/Login.vue';
 // import Tetris from './components/Games/Tetris/Tetris.vue';
 import ConnectFour from './components/Games/ConnectFour.vue';
 import CookieClicker from './components/Games/CookieClicker/cookieClicker.vue';
