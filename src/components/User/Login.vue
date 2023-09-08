@@ -52,7 +52,6 @@ const userLoginPassword = ref('');
 const newUserID = ref(+Math.random().toString().substring(2));
 const newUserPasswort = ref('');
 const newUserEmail = ref('');
-
 function createUser() {
   loadUserData();
   users.value.push({
