@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 
 export type UserType = {
-  id: number;
+  id: string | undefined;
   email: string;
   player?: { cookiesInTotal: number; cookies: number; clickValue: number; passiveClicks: number };
   upgrades?: {
@@ -11,6 +11,6 @@ export type UserType = {
   passwortHash: string;
 };
 
-export const loggedInUserEmail = ref<string | undefined>();
+export const loggedInUserId = ref<string | undefined>();
 export const users = ref<UserType[]>([]);
 localStorage.setItem('LocalUserList', JSON.stringify(users.value));

@@ -2,7 +2,6 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, setDoc, getDocs, collection, updateDoc, addDoc, deleteDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { ref } from 'vue';
-// import { loggedInUserEmail } from './components/User/userInformation';
 export const user = ref<any>(null);
 
 const firebaseConfig = {
@@ -25,7 +24,7 @@ export async function getUserDataList() {
         userData: {
           name: string;
           role: 'user';
-          mail: string;
+          eMail: string;
         };
         cookieClickerData: {
           upgradeData: {
@@ -73,30 +72,36 @@ export async function logout(): Promise<void> {
   getCurrentUser();
   window.location.reload();
 }
-
 export async function register(name: string, email: string, password: string): Promise<boolean> {
-  const auth = getAuth();
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    await setDoc(doc(getFirestore(), 'users', userCredential.user.uid), {
-      userData: {
-        name: name,
-        role: 'user',
-        mail: email,
-      },
-      cookieClickerData: {
-        upgradeData: {
-          clickUpgradeLevel: 1,
-          grandmaUpgradeLevel: 1,
-        },
-        playerData: { cookiesInTotal: 0, cookies: 0, clickValue: 1, passiveClicks: 0 },
-      },
-    });
-    window.location.reload();
-    return true;
-  } catch (e) {
-    console.log('was not abtle to set doc ');
+  const userList = await getUserDataList();
+  if (!userList.filter(e => e.userData.eMail === email)) {
+    console.log('test');
     return false;
+  } else {
+    const auth = getAuth();
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(getFirestore(), 'users', userCredential.user.uid), {
+        userData: {
+          id: userCredential.user.uid,
+          name: name,
+          role: 'user',
+          mail: email,
+        },
+        cookieClickerData: {
+          upgradeData: {
+            clickUpgradeLevel: 1,
+            grandmaUpgradeLevel: 1,
+          },
+          playerData: { cookiesInTotal: 0, cookies: 0, clickValue: 1, passiveClicks: 0 },
+        },
+      });
+      window.location.reload();
+      return true;
+    } catch (e) {
+      console.log('was not abtle to set doc ');
+      return false;
+    }
   }
 }
 export function getCurrentUser() {

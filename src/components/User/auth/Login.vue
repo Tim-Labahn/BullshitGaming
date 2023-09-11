@@ -21,7 +21,7 @@
           <h3>Bullshit Gaming-Konto erstellen</h3>
           <form
             @submit.prevent="
-              API.register(newUserName, newUserEmail, newUserPasswort), (loggedInUserEmail = newUserEmail), (loginStep = 0), (route = 'Home')
+              API.register(newUserName, newUserEmail, newUserPasswort), (loggedInUserId = newUserId), (loginStep = 0), (route = 'Home')
             "
           >
             <div>
@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { users, loggedInUserEmail, UserType } from '.././userInformation';
+import { users, loggedInUserId, UserType } from '.././userInformation';
 import { route } from '../../../Route';
 import * as API from '../../.././API';
 const loginStep = ref(0);
@@ -70,7 +70,7 @@ async function login() {
 }
 
 if (users) {
-  loggedInUserData.value = users.value.find(user => user.email === loggedInUserEmail.value);
+  loggedInUserData.value = users.value.find(user => user.id === loggedInUserId.value);
 }
 </script>
 <style lang="scss" scoped>
