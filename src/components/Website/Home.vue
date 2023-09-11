@@ -26,7 +26,7 @@
     </div>
     <div class="game">
       <h3>Spiel 2: Cookie Clicker</h3>
-      <p>Clicke bis die finger bluten und sammle alle Coockies. Jetzt neu, versklave deine oma um mit dir zu arbeiten.</p>
+      <p>Clicke bis die finger bluten und sammle alle Cookies. Jetzt neu, versklave deine oma um mit dir zu arbeiten.</p>
       <button @click.prevent="route = 'CookieClicker'">Spiel starten</button>
     </div>
   </section>

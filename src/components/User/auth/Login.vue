@@ -11,7 +11,7 @@
               <input v-model="userLoginEmail" id="Name" type="email" placeholder="E-Mail" required />
             </div>
             <div>
-              <input v-model="userLoginPassword" type="password" placeholder="Passwort" required />
+              <input v-model="userLoginPassword" type="password" placeholder="Passwort" required minlength="6" />
             </div>
             <button class="btn btn-dark">Weiter</button>
           </form>
@@ -31,7 +31,7 @@
               <input v-model="newUserName" id="Name" type="text" placeholder="Name" required />
             </div>
             <div>
-              <input v-model="newUserPasswort" type="password" placeholder="Passwort" required />
+              <input v-model="newUserPasswort" type="password" placeholder="Passwort" required minlength="6" />
             </div>
             <div class="d-flex justify-content-end"><button class="btn btn-dark">Registrieren</button></div>
           </form>
