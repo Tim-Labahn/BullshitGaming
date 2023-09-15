@@ -37,6 +37,9 @@
             <li class="nav-item">
               <a class="nav-link" href="#" @click="route = 'Tetris'">Tetris</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" @click="route = 'Snake'">Snake</a>
+            </li>
           </div>
           <li class="nav-item" v-if="loggedInUserEmail === undefined">
             <a class="nav-link" href="#" @click="route = 'Login'">Login</a>
@@ -48,36 +51,18 @@
       </div>
     </div>
   </nav>
-  <div class="d-flex justify-content-center align-items-center">
-    <div class="Game" style="height: 90%">
-      <div v-if="route === 'Login'">
-        <Login></Login>
-      </div>
-      <div v-if="route === 'Home'">
-        <Home></Home>
-      </div>
-      <div v-if="route === 'Minesweeper'">
-        <Minesweeper></Minesweeper>
-      </div>
-      <div v-if="route === 'MathQuiz'">
-        <MathQuiz></MathQuiz>
-      </div>
-      <div v-if="route === 'ConnectFour'">
-        <ConnectFour></ConnectFour>
-      </div>
-      <div v-if="route === 'CookieClicker'">
-        <CookieClicker></CookieClicker>
-      </div>
-      <div v-if="route === 'TicTacToe'">
-        <TicTacToe></TicTacToe>
-      </div>
-      <div v-if="route === 'Minesweeper'">
-        <Minesweeper></Minesweeper>
-      </div>
-      <!-- <div v-if="route === 'Tetris'">
+  <div class="d-flex justify-content-center align-items-center Game" style="height: calc(100vh - 56px)">
+    <Login v-if="route === 'Login'"></Login>
+    <Home v-if="route === 'Home'"></Home>
+    <MathQuiz v-if="route === 'MathQuiz'"></MathQuiz>
+    <ConnectFour v-if="route === 'ConnectFour'"></ConnectFour>
+    <CookieClicker v-if="route === 'CookieClicker'"></CookieClicker>
+    <TicTacToe v-if="route === 'TicTacToe'"></TicTacToe>
+    <Minesweeper v-if="route === 'Minesweeper'"></Minesweeper>
+    <Snake v-if="route === 'Snake'"></Snake>
+    <!-- <div v-if="route === 'Tetris'">
         <Tetris></Tetris>
       </div> -->
-    </div>
   </div>
 </template>
 
@@ -92,6 +77,7 @@ import CookieClicker from './components/Games/CookieClicker/cookieClicker.vue';
 import TicTacToe from './components/Games/TicTacToe.vue';
 import MathQuiz from './components/Games/MathQuiz.vue';
 import Minesweeper from './components/Games/Minesweeper.vue';
+import Snake from './components/Games/Snake.vue';
 import { route } from './Route';
 import { loggedInUserEmail } from './components/User/userInformation';
 </script>

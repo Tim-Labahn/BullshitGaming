@@ -244,8 +244,8 @@ $tileSize: 50px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   margin: 0;
   background-color: $white-color;
 }
