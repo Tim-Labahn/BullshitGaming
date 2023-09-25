@@ -41,11 +41,11 @@
               <a class="nav-link" href="#" @click="route = 'Snake'">Snake</a>
             </li>
           </div>
-          <li class="nav-item" v-if="loggedInUserEmail === undefined">
+          <li class="nav-item" v-if="loggedInUserId === undefined">
             <a class="nav-link" href="#" @click="route = 'Login'">Login</a>
           </li>
-          <li class="nav-item" v-else-if="loggedInUserEmail !== undefined">
-            <a class="nav-link" href="#" @click="loggedInUserEmail = undefined">Logout</a>
+          <li class="nav-item" v-else-if="loggedInUserId !== undefined">
+            <a class="nav-link" href="#" @click="loggedInUserId = undefined">Logout</a>
           </li>
         </ul>
       </div>
@@ -79,7 +79,7 @@ import MathQuiz from './components/Games/MathQuiz.vue';
 import Minesweeper from './components/Games/Minesweeper.vue';
 import Snake from './components/Games/Snake.vue';
 import { route } from './Route';
-import { loggedInUserEmail } from './components/User/userInformation';
+import { loggedInUserId } from './components/User/userInformation';
 </script>
 
 <style scoped></style>

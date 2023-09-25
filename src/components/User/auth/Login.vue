@@ -11,7 +11,7 @@
               <input v-model="userLoginEmail" id="Name" type="email" placeholder="E-Mail" required />
             </div>
             <div>
-              <input v-model="userLoginPassword" type="password" placeholder="Passwort" required />
+              <input v-model="userLoginPassword" type="password" placeholder="Passwort" required minlength="6" />
             </div>
             <button class="btn btn-dark">Weiter</button>
           </form>
@@ -21,7 +21,7 @@
           <h3>Bullshit Gaming-Konto erstellen</h3>
           <form
             @submit.prevent="
-              API.register(newUserName, newUserEmail, newUserPasswort), (loggedInUserEmail = newUserEmail), (loginStep = 0), (route = 'Home')
+              API.register(newUserName, newUserEmail, newUserPasswort), (loggedInUserId = newUserId), (loginStep = 0), (route = 'Home')
             "
           >
             <div>
@@ -31,7 +31,7 @@
               <input v-model="newUserName" id="Name" type="text" placeholder="Name" required />
             </div>
             <div>
-              <input v-model="newUserPasswort" type="password" placeholder="Passwort" required />
+              <input v-model="newUserPasswort" type="password" placeholder="Passwort" required minlength="6" />
             </div>
             <div class="d-flex justify-content-end"><button class="btn btn-dark">Registrieren</button></div>
           </form>
@@ -47,7 +47,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { users, loggedInUserEmail, UserType } from '.././userInformation';
+import { users, loggedInUserId, UserType } from '.././userInformation';
 import { route } from '../../../Route';
 import * as API from '../../.././API';
 const loginStep = ref(0);
@@ -70,7 +70,7 @@ async function login() {
 }
 
 if (users) {
-  loggedInUserData.value = users.value.find(user => user.email === loggedInUserEmail.value);
+  loggedInUserData.value = users.value.find(user => user.id === loggedInUserId.value);
 }
 </script>
 <style lang="scss" scoped>
