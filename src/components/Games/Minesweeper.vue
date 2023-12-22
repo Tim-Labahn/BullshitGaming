@@ -78,7 +78,6 @@ type Tile = {
   isOpen: boolean;
 };
 
-const gameMap = ref<Tile[][]>([]);
 let width: number;
 let height: number;
 let difficulty = 1;
@@ -92,22 +91,7 @@ function game() {
   generateField();
   generateBomb();
 }
-function generateField() {
-  for (let i = 0; i < height; i++) {
-    const rowY = [];
-    for (let k = 0; k < width; k++) {
-      const field = {
-        isBomb: false,
-        isFlag: false,
-        isOpen: false,
-      };
-      const rowX = field;
-      rowY.push(rowX);
-    }
 
-    gameMap.value.push(rowY);
-  }
-}
 function generateBomb() {
   for (const column of gameMap.value) {
     for (let i = 0; i <= difficulty; i++) {

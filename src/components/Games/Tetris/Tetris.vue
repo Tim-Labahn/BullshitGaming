@@ -1,7 +1,7 @@
 <template>
   <div style="background-color: grey; width: 400px; height: 100px; position: absolute; left: 750px; top: 106px">‍</div>
   <div class="tetris">
-    <button class="btn btn-primary" @click="console.log(gameMap)">Show Game Map</button>
+    <button class="btn btn-primary" @click="console.log(spawnOrder[curentTetromine][rotation][0][0])">Show</button>
     <button class="btn btn-primary" @click="spawnTetromini()">Start</button>
     <dialog :open="lose" style="border-radius: 10px; top: 450px; height: 150px; width: 200px; text-align: center">
       GAME OVER
@@ -33,7 +33,7 @@ const pressedKeys = ref({
   q: false,
   s: false,
 });
-
+const Tetronimis = TETRONIMIS;
 window.onkeyup = e => {
   pressedKeys.value[e.key as keyof typeof pressedKeys.value] = false;
 };
@@ -119,19 +119,50 @@ function blockMovement() {
     }
   }
   // rotation shit starts here-----------------------------------------------------------------
-  if (pressedKeys.value.e && !checkIsBlocked(-1) && !checkIsBlocked(+1)) {
-    for (let y = gameMap.value[0].length - 1; y >= 0; y--) {
-      for (let x = gameMap.value.length - 1; x >= 0; x--) {
-        if (gameMap.value[x][y].color === 'black' && gameMap.value[x + 1] && gameMap.value[x + 1][y].color === 'white') {
-          gameMap.value[x][y].color = 'white';
-          gameMap.value[x + 1][y].color = 'black';
-        }
+  if (pressedKeys.value.e) {
+    if (checkIsBlocked(+1) || checkIsBlocked(-1)) return;
+    rotation.value++;
+    console.log('rotate');
+    for (let row = 0; row < gameSizeX; row++) {
+      for (let tile = 0; tile < gameSizeY; tile++) {
+        if (gameMap.value[row][tile].color !== 'black') continue;
+        rotateBlock(row, tile);
+
+        console.log(spawnOrder.value[curentTetromine.value][rotation.value][0]);
+
+        // gameMap.value[tile + 3][row].color = 'black';
       }
     }
   }
-}
 
-// function rotateBlock() {}
+  if (pressedKeys.value.q) {
+    rotation.value--;
+  }
+}
+function rotateBlock(x: number, y: number) {
+  const tetromino = spawnOrder.value[curentTetromine.value];
+  const currentRotation = rotation.value;
+  // Clear the current tetromino from the game map
+  for (let row = 0; row < gameSizeY; row++) {
+    for (let tile = 0; tile < gameSizeX; tile++) {
+      if (gameMap.value[row][tile].color === 'black') {
+        gameMap.value[row][tile].color = 'white';
+      }
+    }
+  }
+
+  // Update the game map with the rotated tetromino
+  for (let row = 0; row < tetrominoSize; row++) {
+    for (let col = 0; col < tetr  ominoSize; col++) {
+      if (rotatedTetromino[row][col] === 1) {
+        gameMap.value[y + row][x + col].color = 'black'; // Place new rotated tetromino here
+      }
+    }
+  }
+
+  // Update the rotation state
+  rotation.value = (currentRotation + 1) % tetromino.length;
+}
 
 function checkFullRow() {
   let blockInRow = 0;
@@ -168,6 +199,7 @@ function blockFall() {
     }
     spawnTetromini();
   } else {
+    rotation.value = 0;
     for (let y = gameSizeY; y >= 0; y--) {
       for (let x = gameSizeX; x >= 0; x--) {
         if (gameMap.value[x]?.[y]?.color === 'black' && gameMap.value[x]?.[y + 1]?.color === 'white') {
@@ -206,7 +238,8 @@ function gameEnd() {
 }
 
 const curentTetromine = ref(0);
-const spawnOrder = ref([J, L, T, I, S, Z, O]);
+const rotation = ref(0);
+const spawnOrder = ref([Tetronimis.j, Tetronimis.l, Tetronimis.t, Tetronimis.i, Tetronimis.s, Tetronimis.z, Tetronimis.o]);
 
 function spawnTetromini() {
   for (let row = 0; row < 2; row++) {
@@ -218,13 +251,18 @@ function spawnTetromini() {
     }
   }
   if (!lose) {
+    rotation.value++;
+    if (rotation.value > 3) {
+      rotation.value = 0;
+    }
     curentTetromine.value++;
     if (curentTetromine.value > 6) {
       curentTetromine.value = 0;
     }
     for (let row = 0; row < 4; row++) {
       for (let tile = 0; tile < 4; tile++) {
-        if (spawnOrder.value[curentTetromine.value][0][0].value[row][tile] >= 1) {
+        // if (spawnOrder.value[curentTetromine.value].find((e)=> e[) >= 1) {
+        if (spawnOrder.value[curentTetromine.value][rotation.value][row][tile] >= 1) {
           gameMap.value[tile + 3][row].color = 'black';
         }
       }

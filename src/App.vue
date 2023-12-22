@@ -74,9 +74,9 @@
       <div v-if="route === 'Minesweeper'">
         <Minesweeper></Minesweeper>
       </div>
-      <!-- <div v-if="route === 'Tetris'">
+      <div v-if="route === 'Tetris'">
         <Tetris></Tetris>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@
 // import Login from './components/Login.vue';
 import Home from './components/Website/Home.vue';
 import Login from './components/User/auth/Login.vue';
-// import Tetris from './components/Games/Tetris/Tetris.vue';
+import Tetris from './components/Games/Tetris/Tetris.vue';
 import ConnectFour from './components/Games/ConnectFour.vue';
 import CookieClicker from './components/Games/CookieClicker/cookieClicker.vue';
 import TicTacToe from './components/Games/TicTacToe.vue';
